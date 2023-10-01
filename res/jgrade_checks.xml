@@ -128,7 +128,7 @@
         <module name="InnerAssignment"/> <!-- avoid assignments as expressions -->
         <!--<module name="MagicNumber"/>--> <!-- more trouble than it's worth -->
         <module name="MissingSwitchDefault"/> <!-- standardize switch -->
-        <module name="ModifiedControlVariable"/> <!-- TODO: should for-each be different? -->
+        <module name="ModifiedControlVariable"/>
         <module name="MultipleVariableDeclarations"/>
         <module name="NestedTryDepth"/> <!-- no try inside a try -->
         <module name="NoClone"/>
@@ -156,16 +156,16 @@
         <!--<module name="VisibilityModifier"/>--> <!-- too restrictive for nested classes -->
 
         <!-- code complexity checks -->
-	<!--<module name="ClassDataAbstractionCoupling"/>--> <!-- too restrictive for polymorphic test drivers that make instances of a lot of classes -->
-        <module name="ClassFanOutComplexity"/> <!-- TODO: on probation -->
+	    <!--<module name="ClassDataAbstractionCoupling"/>--> <!-- too restrictive for polymorphic test drivers that make instances of a lot of classes -->
+        <module name="ClassFanOutComplexity"/>
         <module name="CyclomaticComplexity"/> <!-- keep methods managable -->
-        <module name="NPathComplexity"/> <!-- TODO: on probation -->
+        <module name="NPathComplexity"/>
 
         <!-- miscellaneous checks -->
         <module name="ArrayTypeStyle"/> <!-- it's not a C course -->
         <module name="CommentsIndentation"/> <!-- not in 5.9 -->
         <!--<module name="FinalParameters"/>--> <!-- ruins pass-by-value -->
-        <module name="Indentation"/> <!-- standardize indentation TODO: case labels? -->
+        <module name="Indentation"/> <!-- standardize indentation -->
         <module name="OuterTypeFilename"/>
         <module name="TodoComment"/>
         <module name="UpperEll"/>
