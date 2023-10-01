@@ -1,0 +1,35 @@
+package com.github.dscpsyl.jgrade;
+
+import org.junit.Test;
+
+import com.github.dscpsyl.jgrade.CLIResult;
+import com.github.dscpsyl.jgrade.CLITester;
+
+import static org.junit.Assert.assertEquals;
+
+public class CLITesterExecutionResultTest {
+
+    @Test
+    public void getStdout() {
+        CLIResult unit = new CLITester.ExecutionResult("test1", "", 1);
+        assertEquals("test1", unit.getOutput(CLIResult.STREAM.STDOUT));
+    }
+
+    @Test
+    public void getByLineOnEmptyString() {
+        CLIResult unit = new CLITester.ExecutionResult("test1", "", 1);
+        assertEquals(0, unit.getOutputByLine(CLIResult.STREAM.STDERR).size());
+    }
+
+    @Test
+    public void getExitValue() {
+        CLIResult unit = new CLITester.ExecutionResult("test1", "", 1);
+        assertEquals(1, unit.exitValue());
+    }
+
+    @Test
+    public void defaultGetStd() {
+        CLIResult unit = new CLITester.ExecutionResult("stdout", "stderr", 0);
+        assertEquals("stdout", unit.getOutput());
+    }
+}
