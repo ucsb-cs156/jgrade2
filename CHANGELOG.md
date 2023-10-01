@@ -14,7 +14,8 @@
 #### Added
 - Maven Wrapper is now being used to build the project
 #### Changed
-- Project moved to new repository [jgrade2](https://github.com/dscpsyl/jgrade2) from [jgrade](https://github.com/tkutcher/jgrade)
+- Project moved to new repository [jgrade2](https://github.com/dscpsyl/jgrade2) from [jgrade](https://github.com/tkutcher/jgrade).
+- Dependencies updated to reflect new project.
 
 ### 2.0.0 (alpha-1)
 - Renamed `Observer` to `Formatter` everywhere
