@@ -27,7 +27,7 @@
         <commons-cli.version>1.5.0</commons-cli.version>
         <maven-compiler-plugin.version>3.11.0</maven-compiler-plugin.version>
         <org.json.version>chargebee-1.0</org.json.version>
-        <maven-checkstyle-plugin.version>3.0.0</maven-checkstyle-plugin.version>
+        <maven-checkstyle-plugin.version>3.3.0</maven-checkstyle-plugin.version>
         <maven-wrapper-parent.version>3.2.0</maven-wrapper-parent.version>
         <maven-assembly-plugin.version>3.6.0</maven-assembly-plugin.version>
         <maven-javadoc-plugin.version>3.6.0</maven-javadoc-plugin.version>
@@ -156,7 +156,6 @@
                 <version>${maven-checkstyle-plugin.version}</version>
                 <configuration>
                     <configLocation>res/jgrade_checks.xml</configLocation>
-                    <encoding>UTF-8</encoding>
                     <consoleOutput>true</consoleOutput>
                     <failsOnError>true</failsOnError>
                 </configuration>
