@@ -143,7 +143,7 @@
                             <archive>
                                 <manifest>
                                     <!--!Change after all src files have been updated-->
-                                    <mainClass>com.github.tkutcher.jgrade.JGrade</mainClass>
+                                    <mainClass>com.github.dscpsyl.jgrade.JGrade</mainClass>
                                 </manifest>
                             </archive>
                         </configuration>
