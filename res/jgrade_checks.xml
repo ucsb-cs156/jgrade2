@@ -18,6 +18,11 @@
     <!-- maximum 2000 lines by default -->
     <module name="FileLength"/>
 
+    <!-- maximum 120 characters (80 by default) -->
+    <module name="LineLength">
+            <property name="max" value="120"/>
+        </module>
+
     <!-- tabs are not popular in Java -->
     <module name="FileTabCharacter"/>
 
@@ -28,7 +33,7 @@
 
     <module name="TreeWalker">
         <module name="JavadocMethod">
-           <property name="scope" value="protected"/>
+           <property name="accessModifiers" value="protected"/>
         </module>
         <module name="JavadocType">
            <property name="scope" value="protected"/>
@@ -67,9 +72,6 @@
 
         <!-- size violations -->
         <module name="AnonInnerLength"/> <!-- default 20 lines -->
-        <module name="LineLength">
-            <property name="max" value="120"/>
-        </module> <!-- default 80 chars -->
         <module name="MethodLength"/> <!-- default 150 lines -->
         <module name="ParameterNumber"/> <!-- default 7 parameters -->
         <module name="OuterTypeNumber"/> <!-- default 1 per file -->
