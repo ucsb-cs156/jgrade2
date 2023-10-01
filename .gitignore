@@ -8,7 +8,8 @@
 # Built docs are built during CI.
 .public/
 
-jgrade.iml  # leaving this in
+# leaving this in
+jgrade.iml  
 
 #.idea/**/workspace.xml
 #.idea/**/tasks.xml
@@ -45,3 +46,6 @@ out/
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+
+# Maven Wrapper
+.mvn*
