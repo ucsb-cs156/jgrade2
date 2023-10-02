@@ -142,7 +142,7 @@ public final class JGrade {
         } catch (IllegalAccessException | InstantiationException
                 | NoSuchMethodException | InvocationTargetException e) {
             fatal("could not invoke constructor of " + c.getName(), e);
-            throw new InternalError("unreachable statement - system should have exited");
+            throw new InternalError("instantiateClass::unreachable statement - system should have exited");
         }
     }
 
@@ -151,7 +151,7 @@ public final class JGrade {
             return ReflectGrade.load(className);
         } catch (MalformedURLException | ClassNotFoundException e) {
             fatal("could not locate class " + className, e);
-            throw new InternalError("unreachable statement - system should have exited");
+            throw new InternalError("getClassToGrade::unreachable statement - system should have exited");
         }
     }
 
