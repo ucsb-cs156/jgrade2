@@ -2,6 +2,7 @@ package com.github.dscpsyl.jgrade;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -25,10 +26,13 @@ final class ReflectGrade {
     private ReflectGrade() { }
 
     // Borrowed mostly from phf
-    static Class<?> load(String className) throws ClassNotFoundException, MalformedURLException {
+    static Class<?> load(String className) throws ClassNotFoundException, MalformedURLException, IOException {
         URL url = FileSystems.getDefault().getPath("").toUri().toURL();
-        URLClassLoader loader = new URLClassLoader(new URL[]{url});
-        return loader.loadClass(className);
+        try (URLClassLoader loader = new URLClassLoader(new URL[]{url})) {
+            return loader.loadClass(className);
+        } catch (IOException e) {
+            throw e;
+        }
     }
 
     private static class GradeMethods {

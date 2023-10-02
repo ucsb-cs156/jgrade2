@@ -12,6 +12,7 @@ import com.github.dscpsyl.jgrade.gradescope.GradescopeJsonFormatter;
 
 import java.io.FileNotFoundException;
 import java.io.PrintStream;
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.MalformedURLException;
@@ -145,7 +146,7 @@ public final class JGrade {
         }
     }
 
-    private static Class<?> getClassToGrade(String className) {
+    private static Class<?> getClassToGrade(String className) throws IOException{
         try {
             return ReflectGrade.load(className);
         } catch (MalformedURLException | ClassNotFoundException e) {
@@ -190,7 +191,7 @@ public final class JGrade {
      * Main entry point. See usage or run with <code>--help</code>
      * @param args Command line arguments.
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException{
         CommandLine line = null;
         try {
             line = readCommandLine(args);
