@@ -68,8 +68,8 @@ public final class JGrade {
 
 
     // Throws a RunTimeException instead of calling System.exit();
-    // FIXME - Is it better to have a different exception?
     private static void fatal(String msg, Exception e) {
+        msg = "[FATAL] A fatal jGrade error occurred: \n" + msg;
         throw new RuntimeException(msg, e);
     }
 
