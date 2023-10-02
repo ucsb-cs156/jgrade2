@@ -13,6 +13,7 @@ import com.github.dscpsyl.jgrade.gradedtest.GradedTestResult;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.io.IOException;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -41,42 +42,42 @@ public class JGradeCommandLineTest {
     }
 
     @Test(expected=RuntimeException.class)
-    public void unknownFlagExits() {
+    public void unknownFlagExits() throws IOException{
         JGrade.main(new String[] {"-blah"});
     }
 
     @Test(expected=RuntimeException.class)
-    public void requiresClassFlag() {
+    public void requiresClassFlag() throws IOException{
         JGrade.main(new String[] {"-f", "json"});
     }
 
     @Test
-    public void acceptsFoundClass() {
+    public void acceptsFoundClass() throws IOException{
         JGrade.main(new String[] {"-c", this.getClass().getCanonicalName()});
     }
 
     @Test
-    public void acceptsMultipleFlags() {
+    public void acceptsMultipleFlags() throws IOException{
         JGrade.main(new String[] {"-f", "json", "-c", this.getClass().getCanonicalName()});
     }
 
     @Test
-    public void acceptsLongOption() {
+    public void acceptsLongOption() throws IOException{
         JGrade.main(new String[] {"--format", "json", "-c", this.getClass().getCanonicalName()});
     }
 
     @Test(expected=RuntimeException.class)
-    public void rejectsNonExistentClass() {
+    public void rejectsNonExistentClass() throws IOException{
         JGrade.main(new String[] {"-c", "thisClassDoesNotExist"});
     }
 
     @Test(expected=RuntimeException.class)
-    public void rejectsInvalidFormatArguments() {
+    public void rejectsInvalidFormatArguments() throws IOException{
         JGrade.main(new String[] {"-f", "invalid", "-c", this.getClass().getCanonicalName()});
     }
 
     @Test
-    public void printedValidJson() throws JSONException {
+    public void printedValidJson() throws JSONException, IOException{
         JGrade.main(new String[] {"--format", "json", "-c", this.getClass().getCanonicalName()});
         JSONObject json = new JSONObject(captureOut.toString());
         assertTrue(json.has("tests"));
