@@ -215,7 +215,7 @@ public class Grader {
      * run by setting the {@link GraderStrategy}.
      * @param testSuite The class containing the tests.
      */
-    public void runJUnitGradedTests(Class<test> testSuite) {
+    public void runJUnitGradedTests(Class<?> testSuite) {
         // Wrap the testSuite into something that JUnit can run.
         LauncherDiscoveryRequest request = LauncherDiscoveryRequestBuilder.request()
                 .selectors(selectClass(testSuite))
