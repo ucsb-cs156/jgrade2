@@ -1,17 +1,17 @@
 package com.github.dscpsyl.jgrade.gradedtest;
 
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.JUnitCore;
-
-import com.github.dscpsyl.jgrade.gradedtest.GradedTest;
-import com.github.dscpsyl.jgrade.gradedtest.GradedTestListener;
-import com.github.dscpsyl.jgrade.gradedtest.GradedTestResult;
+import org.junit.jupiter.api.Test;
+import org.junit.platform.launcher.Launcher;
+import org.junit.platform.launcher.LauncherDiscoveryRequest;
+import org.junit.platform.launcher.LauncherSession;
+import org.junit.platform.launcher.TestPlan;
+import org.junit.platform.launcher.core.LauncherDiscoveryRequestBuilder;
+import org.junit.platform.launcher.core.LauncherFactory;
+import org.junit.jupiter.api.BeforeEach;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.platform.engine.discovery.DiscoverySelectors.selectClass;
 
 import java.util.List;
-
-import static org.junit.Assert.*;
 
 
 public class GradedTestListenerTest {
@@ -24,15 +24,24 @@ public class GradedTestListenerTest {
 
     private GradedTestListener listener;
 
-    @Before
+    @BeforeEach
     public void initUnit() {
         this.listener = new GradedTestListener();
     }
 
+    // Method established in Grader.runJUnitGradedTests
     private void runWithListenerForExample(Class<?> exampleUnitTests) {
-        JUnitCore runner = new JUnitCore();
-        runner.addListener(this.listener);
-        runner.run(exampleUnitTests);
+        LauncherDiscoveryRequest request = LauncherDiscoveryRequestBuilder.request()
+                .selectors(selectClass(exampleUnitTests))
+                .build();
+
+        GradedTestListener listener = new GradedTestListener();
+
+        LauncherSession session = LauncherFactory.openSession();
+        Launcher launcher = session.getLauncher();
+        launcher.registerTestExecutionListeners(listener);
+        TestPlan testPlan = launcher.discover(request);
+        launcher.execute(testPlan);
     }
 
     private GradedTestResult getOnlyGradedTestResult(Class<?> exampleUnitTests) {
@@ -74,7 +83,7 @@ public class GradedTestListenerTest {
         assertEquals(EXAMPLE_NAME, result.getName());
         assertEquals(EXAMPLE_NUMBER, result.getNumber());
         assertEquals(EXAMPLE_POINTS, result.getPoints(), 0.0);
-        Assert.assertEquals(GradedTestResult.HIDDEN, result.getVisibility());
+        assertEquals(GradedTestResult.HIDDEN, result.getVisibility());
     }
 
     @Test
@@ -114,10 +123,11 @@ public class GradedTestListenerTest {
         assertTrue(result.getOutput().contains(EXAMPLE_MESSAGE));
     }
 
+    //! FIXME?
     @Test
     public void addsRegularFailureToStringIfNoMessage() {
         GradedTestResult result = getOnlyGradedTestResult(SingleFailedGradedTest.class);
-        assertNotEquals("", result.getOutput());  // FIXME ?
+        assertNotEquals("", result.getOutput());
     }
 
     /* * HELPER EXAMPLE "UNIT TEST" CLASSES * */
