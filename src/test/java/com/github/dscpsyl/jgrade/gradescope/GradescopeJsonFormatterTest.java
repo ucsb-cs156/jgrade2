@@ -7,10 +7,6 @@ import org.junit.Test;
 
 import com.github.dscpsyl.jgrade.Grader;
 import com.github.dscpsyl.jgrade.gradedtest.GradedTestResult;
-import com.github.dscpsyl.jgrade.gradescope.GradescopeJsonException;
-import com.github.dscpsyl.jgrade.gradescope.GradescopeJsonFormatter;
-
-import static org.junit.Assert.assertEquals;
 
 public class GradescopeJsonFormatterTest {
 

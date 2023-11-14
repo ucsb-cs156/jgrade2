@@ -3,8 +3,6 @@ package com.github.dscpsyl.jgrade.gradedtest;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.github.dscpsyl.jgrade.gradedtest.GradedTestResult;
-
 import static org.junit.Assert.assertEquals;
 
 public class GradedTestResultTest {

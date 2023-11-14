@@ -2,9 +2,6 @@ package com.github.dscpsyl.jgrade;
 
 import org.junit.Test;
 
-import com.github.dscpsyl.jgrade.CLIResult;
-import com.github.dscpsyl.jgrade.CLITester;
-
 import static org.junit.Assert.assertEquals;
 
 public class CLITesterExecutionResultTest {
