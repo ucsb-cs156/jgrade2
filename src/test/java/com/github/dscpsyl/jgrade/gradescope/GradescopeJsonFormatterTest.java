@@ -20,7 +20,7 @@ public class GradescopeJsonFormatterTest {
     }
 
     private static void assertValidJson(String s) throws JSONException {
-        JSONObject o = new JSONObject(s);
+        new JSONObject(s);
     }
 
     @Test(expected=GradescopeJsonException.class)
