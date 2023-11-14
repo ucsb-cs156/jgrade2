@@ -1,15 +1,14 @@
 package com.github.dscpsyl.jgrade;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.BeforeEach;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.github.dscpsyl.jgrade.gradedtest.GradedTestResult;
+import static com.github.dscpsyl.jgrade.gradedtest.GradedTestResult.HIDDEN;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.github.dscpsyl.jgrade.gradedtest.GradedTestResult.HIDDEN;
-import static org.junit.Assert.assertEquals;
 
 public class DeductiveGraderStrategyTest {
 
@@ -18,7 +17,7 @@ public class DeductiveGraderStrategyTest {
 
     private DeductiveGraderStrategy unit;
 
-    @Before
+    @BeforeEach
     public void initUnit() {
         this.unit = new DeductiveGraderStrategy(STARTING_SCORE, "blah");
     }

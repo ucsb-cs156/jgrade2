@@ -2,9 +2,10 @@ package com.github.dscpsyl.jgrade;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.AfterEach;
 
 import com.github.dscpsyl.jgrade.gradedtest.GradedTestResult;
 
@@ -12,8 +13,9 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.io.IOException;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class JGradeCommandLineTest {
 
@@ -22,7 +24,7 @@ public class JGradeCommandLineTest {
     private ByteArrayOutputStream captureOut;
     private ByteArrayOutputStream captureErr;
 
-    @Before
+    @BeforeEach
     public void captureOutput() {
         origOut = System.out;
         origErr = System.err;
@@ -32,20 +34,24 @@ public class JGradeCommandLineTest {
         System.setErr(new PrintStream(captureErr));
     }
 
-    @After
+    @AfterEach
     public void resetOutput() { ;
         System.setOut(origOut);
         System.setErr(origErr);
     }
 
-    @Test(expected=RuntimeException.class)
+    @Test
     public void unknownFlagExits() throws IOException{
+        assertThrows(RuntimeException.class, () -> {
         JGrade.main(new String[] {"-blah"});
+        });
     }
 
-    @Test(expected=RuntimeException.class)
+    @Test
     public void requiresClassFlag() throws IOException{
+        assertThrows(RuntimeException.class, () -> {
         JGrade.main(new String[] {"-f", "json"});
+        });
     }
 
     @Test
@@ -63,14 +69,18 @@ public class JGradeCommandLineTest {
         JGrade.main(new String[] {"--format", "json", "-c", this.getClass().getCanonicalName()});
     }
 
-    @Test(expected=RuntimeException.class)
+    @Test
     public void rejectsNonExistentClass() throws IOException{
-        JGrade.main(new String[] {"-c", "thisClassDoesNotExist"});
+        assertThrows(RuntimeException.class, () -> {
+            JGrade.main(new String[] {"-c", "thisClassDoesNotExist"});
+        });
     }
 
-    @Test(expected=RuntimeException.class)
+    @Test
     public void rejectsInvalidFormatArguments() throws IOException{
+        assertThrows(RuntimeException.class, () -> {
         JGrade.main(new String[] {"-f", "invalid", "-c", this.getClass().getCanonicalName()});
+        });
     }
 
     @Test
