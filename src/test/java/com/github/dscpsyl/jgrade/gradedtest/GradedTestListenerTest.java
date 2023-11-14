@@ -29,13 +29,13 @@ public class GradedTestListenerTest {
         this.listener = new GradedTestListener();
     }
 
-    private void runWithListenerForExample(Class exampleUnitTests) {
+    private void runWithListenerForExample(Class<?> exampleUnitTests) {
         JUnitCore runner = new JUnitCore();
         runner.addListener(this.listener);
         runner.run(exampleUnitTests);
     }
 
-    private GradedTestResult getOnlyGradedTestResult(Class exampleUnitTests) {
+    private GradedTestResult getOnlyGradedTestResult(Class<?> exampleUnitTests) {
         runWithListenerForExample(exampleUnitTests);
         List<GradedTestResult> results = this.listener.getGradedTestResults();
         assertEquals(1, results.size());
