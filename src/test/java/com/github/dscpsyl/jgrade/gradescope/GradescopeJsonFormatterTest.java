@@ -2,8 +2,10 @@ package com.github.dscpsyl.jgrade.gradescope;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.junit.Before;
-import org.junit.Test;
+
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.BeforeEach;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import com.github.dscpsyl.jgrade.Grader;
 import com.github.dscpsyl.jgrade.gradedtest.GradedTestResult;
@@ -13,7 +15,7 @@ public class GradescopeJsonFormatterTest {
     private GradescopeJsonFormatter unit;
     private Grader grader;
 
-    @Before
+    @BeforeEach
     public void initUnit() {
         unit = new GradescopeJsonFormatter();
         grader = new Grader();
@@ -23,15 +25,19 @@ public class GradescopeJsonFormatterTest {
         new JSONObject(s);
     }
 
-    @Test(expected=GradescopeJsonException.class)
+    @Test
     public void invalidIfEmpty() {
-        unit.format(grader);
+        assertThrows(GradescopeJsonException.class, () -> {
+            unit.format(grader);
+        });
     }
 
-    @Test(expected=GradescopeJsonException.class)
+    @Test
     public void invalidIfNoTestsOrScore() {
-        grader.setExecutionTime(45);
-        unit.format(grader);
+        assertThrows(GradescopeJsonException.class, () -> {
+            grader.setExecutionTime(45);
+            unit.format(grader);
+        });
     }
 
     @Test
@@ -46,13 +52,17 @@ public class GradescopeJsonFormatterTest {
         assertValidJson(unit.format(grader));
     }
 
-    @Test(expected=GradescopeJsonException.class)
+    @Test
     public void catchesInvalidVisibility() {
+        assertThrows(GradescopeJsonException.class, () -> {
         unit.setVisibility("invisible");
+        });
     }
 
-    @Test(expected=GradescopeJsonException.class)
+    @Test
     public void catchesInvalidStdoutVisibility() {
+        assertThrows(GradescopeJsonException.class, () -> {
         unit.setStdoutVisibility("invisible");
+        });
     }
 }
