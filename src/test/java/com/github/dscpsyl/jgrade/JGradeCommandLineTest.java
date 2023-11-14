@@ -6,9 +6,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.github.dscpsyl.jgrade.Grade;
-import com.github.dscpsyl.jgrade.Grader;
-import com.github.dscpsyl.jgrade.JGrade;
 import com.github.dscpsyl.jgrade.gradedtest.GradedTestResult;
 
 import java.io.ByteArrayOutputStream;

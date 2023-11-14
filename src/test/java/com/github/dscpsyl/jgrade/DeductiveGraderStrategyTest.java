@@ -3,7 +3,6 @@ package com.github.dscpsyl.jgrade;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.github.dscpsyl.jgrade.DeductiveGraderStrategy;
 import com.github.dscpsyl.jgrade.gradedtest.GradedTestResult;
 
 import java.util.ArrayList;
