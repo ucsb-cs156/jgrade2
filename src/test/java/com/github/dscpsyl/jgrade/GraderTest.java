@@ -1,21 +1,19 @@
 package com.github.dscpsyl.jgrade;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.BeforeEach;
 
 import com.github.dscpsyl.jgrade.gradedtest.GradedTestResult;
 
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class GraderTest {
 
     private Grader unit;
 
-    @Before
+    @BeforeEach
     public void initUnit() {
         unit = new Grader();
     }
@@ -92,9 +90,11 @@ public class GraderTest {
         assertTrue(unit.getExecutionTime() > atPause);
     }
 
-    @Test(expected=IllegalStateException.class)
+    @Test
     public void cannotStopTimerIfNotStarted() {
-        unit.stopTimer();
+        assertThrows(IllegalStateException.class, () -> {
+            unit.stopTimer();
+        });
     }
 
 }
