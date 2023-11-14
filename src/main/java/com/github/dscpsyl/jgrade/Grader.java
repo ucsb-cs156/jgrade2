@@ -12,7 +12,6 @@ import org.junit.platform.launcher.LauncherSession;
 import org.junit.platform.launcher.TestPlan;
 import org.junit.platform.launcher.core.LauncherDiscoveryRequestBuilder;
 import org.junit.platform.launcher.core.LauncherFactory;
-import org.junit.runner.JUnitCore;
 
 import java.util.ArrayList;
 import java.util.List;
