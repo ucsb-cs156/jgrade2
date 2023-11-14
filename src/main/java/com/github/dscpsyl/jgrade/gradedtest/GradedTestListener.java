@@ -1,13 +1,23 @@
 package com.github.dscpsyl.jgrade.gradedtest;
 
-import org.junit.runner.Description;
-import org.junit.runner.notification.Failure;
+import org.junit.platform.engine.TestExecutionResult;
+import org.junit.platform.engine.TestSource;
+import org.junit.platform.engine.reporting.ReportEntry;
+import org.junit.platform.engine.support.descriptor.MethodSource;
+import org.junit.platform.launcher.TestExecutionListener;
+import org.junit.platform.launcher.TestIdentifier;
+import org.junit.platform.launcher.TestPlan;
 import org.junit.runner.notification.RunListener;
+
+import org.junit.platform.commons.PreconditionViolationException;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
 
 
 /**
@@ -22,13 +32,12 @@ import java.util.List;
  *     also most recently started (for annotated methods).
  * </p>
  */
-public class GradedTestListener extends RunListener {
+public class GradedTestListener implements TestExecutionListener {
 
     private List<GradedTestResult> gradedTestResults;
     private int numFailedGradedTests;
     private ByteArrayOutputStream testOutput;
     private PrintStream originalOutStream;
-    private GradedTestResult currentGradedTestResult;
 
     /**
      * Constructor for a new listener. Initializes a list of
@@ -70,88 +79,253 @@ public class GradedTestListener extends RunListener {
 
     // </editor-fold>
 
-
-    /* NOTE - inherit testRunStarted() and testRunFinished() if any features
-     *   require something to do before/after a run. 1.0.0 has no need.
-     *
-     * FIXME - is it possible to only create the GradedTestResult after the
-     *   test has run? Problem is testRunFinished called regardless of success.
+    /** 
+     * Called when analyzing the test that finished executing. Given a
+     * {@link TestIdentifier}, it will try to get the {@link TestSource}.
+     * Using this, it will try to return a {@link MethodSource}.
+     * 
+     * @param testIdentifier the identifier of the test that finished
+     * 
+     * @return An optional {@link MethodSource}
      */
+     public Optional<MethodSource> getTestMethodSource(TestIdentifier testIdentifier) {
+
+        if (!testIdentifier.isTest()) return Optional.empty();
+
+        Optional<TestSource> oTestSource = testIdentifier.getSource();
+        if (!oTestSource.isPresent()) return Optional.empty();
+
+
+        TestSource abstraTestSource = oTestSource.get();
+        try {
+            MethodSource source = (MethodSource) abstraTestSource;
+            return Optional.of(source);
+
+        } catch (ClassCastException e) {
+            return Optional.empty();
+        }
+    }
+
+    /** 
+     * Called when analyzing the test that finished executing. Given a
+     * {@link MethodSource}, it will see if the method has a {@link GradedTest}
+     * annotation and return it.
+     * 
+     * @param {@link MethodSource} of the test that finished. Can be returned from
+     * {@link #getTestMethodSource(TestIdentifier)}
+     * 
+     * @return An optional {@link GradedTest}
+     */
+     public Optional<GradedTest> getGradedTestAnnotation(MethodSource ms) {
+
+        try {
+            Method testMethod = ms.getJavaMethod();
+            GradedTest gradedTestAnnotation = testMethod.getAnnotation(GradedTest.class);
+            return Optional.ofNullable(gradedTestAnnotation);
+
+        } catch(PreconditionViolationException pve) { // required for getJavaMethod() to be safe
+            return Optional.empty();
+        }
+    }
 
     /**
-     * {@inheritDoc}
+     * Called when the execution of the {@link TestPlan} has started,
+     * <em>before</em> any test has been executed. <b>Currently empty and
+     * does not have any use.<b>
      *
-     * Calls super method and then looks for a {@link GradedTest} annotation.
-     * If one exists, it creates a {@link GradedTestResult} and sets its score
-     * to the number of points. If the test fails the score would be set to 0.
-     * Finally, it sets <code>System.out</code> to be its own
-     * <code>PrintStream</code> to capture output.
+     * @param testPlan describes the tree of tests about to be executed
      */
     @Override
-    public void testStarted(Description description) throws Exception {
-        super.testStarted(description);
+    public void testPlanExecutionStarted(TestPlan testPlan) {
+    }
 
-        this.currentGradedTestResult = null;
+    /**
+     * Called when the execution of the {@link TestPlan} has finished,
+     * <em>after</em> all tests have been executed.<b>Currently empty and
+     * does not have any use.<b>
+     *
+     * @param testPlan describes the tree of tests that have been executed
+     */
+    @Override
+    public void testPlanExecutionFinished(TestPlan testPlan) {
+    }
 
-        GradedTest gradedTestAnnotation = description.getAnnotation(GradedTest.class);
-        if (gradedTestAnnotation != null) {
-            this.currentGradedTestResult =  new GradedTestResult(
-                    gradedTestAnnotation.name(),
-                    gradedTestAnnotation.number(),
-                    gradedTestAnnotation.points(),
-                    gradedTestAnnotation.visibility()
-            );
+    /**
+     * Called when a new, dynamic {@link TestIdentifier} has been registered.
+     *
+     * <p>
+     * A <em>dynamic test</em> is a test that is not known a-priori and
+     * therefore not contained in the original {@link TestPlan}.
+     * 
+     * <p>
+     * Currently, it will log a warning as this is not expected to happen.
+     * Tests should be created and registered before the test plan is
+     * executed. However, even if it is registered dynamically, there is no
+     * problem as the {@link GradedTestResult} will be created when the test
+     * is finished.
+     * 
+     *
+     * @param testIdentifier the identifier of the newly registered test
+     *                       or container
+     */
+    @Override
+    public void dynamicTestRegistered(TestIdentifier testIdentifier) {
+        System.out.println("WARNING:: dynamicTestRegistered");
+    }
 
-            this.currentGradedTestResult.setScore(gradedTestAnnotation.points());
-        }
+    /**
+     * Called when the execution of a leaf or subtree of the {@link TestPlan}
+     * has been skipped.
+     *
+     * <p>
+     * The {@link TestIdentifier} may represent a test or a container. In
+     * the case of a container, no listener methods will be called for any of
+     * its descendants.
+     *
+     * <p>
+     * A skipped test or subtree of tests will never be reported as
+     * {@linkplain #executionStarted started} or
+     * {@linkplain #executionFinished finished}.
+     * 
+     * <p>
+     * This will log out the warning and reason for skipping the test. It will be
+     * up to the user to determine if this is a problem or not.
+     *
+     * @param testIdentifier the identifier of the skipped test or container
+     * @param reason         a human-readable message describing why the execution
+     *                       has been skipped
+     */
+    @Override
+    public void executionSkipped(TestIdentifier testIdentifier, String reason) {
+        System.out.println("WARNING:: executionSkipped - " + reason);
 
+    }
+
+/**
+     * Called when the execution of a leaf or subtree of the {@link TestPlan}
+     * is about to be started.
+     *
+     * <p>
+     * The {@link TestIdentifier} may represent a test or a container.
+     *
+     * <p>
+     * This method will only be called if the test or container has not
+     * been {@linkplain #executionSkipped skipped}.
+     *
+     * <p>
+     * This method will be called for a container {@code TestIdentifier}
+     * <em>before</em> {@linkplain #executionStarted starting} or
+     * {@linkplain #executionSkipped skipping} any of its children.
+     * 
+     * <p>
+     * For backwards compatability, this function sets the {@code testOutput} for
+     * the class.
+     * 
+     *
+     * @param testIdentifier the identifier of the started test or container
+     */
+    @Override
+    public void executionStarted(TestIdentifier testIdentifier) {
         this.testOutput = new ByteArrayOutputStream();
         System.setOut(new PrintStream(this.testOutput));
     }
 
     /**
-     * {@inheritDoc}
+     * Called when the execution of a leaf or subtree of the {@link TestPlan}
+     * has finished, regardless of the outcome.
      *
-     * Calls super method, adds the {@link GradedTestResult} if it exists, and
-     * restores the original <code>PrintStream</code>.
+     * <p>
+     * The {@link TestIdentifier} may represent a test or a container.
+     *
+     * <p>
+     * This method will only be called if the test or container has not
+     * been {@linkplain #executionSkipped skipped}.
+     *
+     * <p>
+     * This method will be called for a container {@code TestIdentifier}
+     * <em>after</em> all of its children have been
+     * {@linkplain #executionSkipped skipped} or have
+     * {@linkplain #executionFinished finished}.
+     *
+     * <p>
+     * The {@link TestExecutionResult} describes the result of the execution
+     * for the supplied {@code TestIdentifier}. The result does not include or
+     * aggregate the results of its children. For example, a container with a
+     * failing test will be reported as {@link Status#SUCCESSFUL SUCCESSFUL} even
+     * if one or more of its children are reported as {@link Status#FAILED FAILED}.
+     * 
+     * <p> From {@link jGrade}, this is a combination of <code>testFinished</code>
+     * <code>testStarted</code>, and <code>testFailure</code>. It will create the 
+     * new {@link GradedTestResult} and add it to the list of results after the test
+     * has finished. It will also set the correct score for the test.
+     *
+     * @param testIdentifier      the identifier of the finished test or container
+     * @param testExecutionResult the (unaggregated) result of the execution for
+     *                            the supplied {@code TestIdentifier}
+     *
+     * @see TestExecutionResult
      */
     @Override
-    public void testFinished(Description description) throws Exception {
-        super.testFinished(description);
+    public void executionFinished(TestIdentifier testIdentifier, TestExecutionResult testExecutionResult) {
 
-        if (this.currentGradedTestResult != null) {
-            this.currentGradedTestResult.addOutput(testOutput.toString());
-            this.gradedTestResults.add(this.currentGradedTestResult);
+        // Create the current graded test result
+        Optional<MethodSource> ms = getTestMethodSource(testIdentifier);
+        if (!ms.isPresent()) return;
+
+        Optional<GradedTest> gradedTestAnnotations = getGradedTestAnnotation(ms.get());
+        if (!gradedTestAnnotations.isPresent()) return;
+        
+        GradedTest gt = gradedTestAnnotations.get();
+        GradedTestResult currentGradedTestResult = new GradedTestResult(
+            gt.name(),
+            gt.number(),
+            gt.points(),
+            gt.visibility()
+        );
+
+        // Check the status of the test and set the score
+        if (testExecutionResult.getStatus() == TestExecutionResult.Status.SUCCESSFUL) { // All passed, full points
+            currentGradedTestResult.setScore(gt.points());
+        } else if (testExecutionResult.getStatus() == TestExecutionResult.Status.FAILED) { // Failed, no points
+            currentGradedTestResult.setScore(0);
+            currentGradedTestResult.addOutput("FAILED:: \n");
+            this.numFailedGradedTests++;
+            currentGradedTestResult.setPassed(false);
+        } else { // Aborted, no points, but give info if available
+            currentGradedTestResult.setScore(0);
+            currentGradedTestResult.addOutput("ABORTED:: \n");
+            Optional<Throwable> t = testExecutionResult.getThrowable();
+            if (t.isPresent()) {
+                currentGradedTestResult.addOutput(t.get().toString());
+            }
+            this.numFailedGradedTests++;
+            currentGradedTestResult.setPassed(false);
+
         }
 
-        this.currentGradedTestResult = null;
+        // Add any output and add to the list of results for this listener
+        currentGradedTestResult.addOutput(this.testOutput.toString() + "\n");
+        this.gradedTestResults.add(currentGradedTestResult);
+        
         System.setOut(originalOutStream);
     }
 
     /**
-     * {@inheritDoc}
+     * Called when additional test reporting data has been published for
+     * the supplied {@link TestIdentifier}.
      *
-     * Calls super method and if the test was annotated with
-     * {@link GradedTest} then sets the {@link GradedTestResult} score to 0
-     * and adds the failure message to the output.
+     * <p>
+     * Can be called at any time during the execution of a test plan.
+     * 
+     * <p> Currently, it will log out a warning and the entry. It will be
+     * up to the user to determine if this is a problem or not.
+     *
+     * @param testIdentifier describes the test or container to which the entry
+     *                       pertains
+     * @param entry          the published {@code ReportEntry}
      */
     @Override
-    public void testFailure(Failure failure) throws Exception {
-        super.testFailure(failure);
-        if (this.currentGradedTestResult != null) {
-            this.currentGradedTestResult.setScore(0);
-            this.currentGradedTestResult.addOutput("FAILED:\n");
-            if (failure.getMessage() != null) {
-                this.currentGradedTestResult.addOutput(failure.getMessage());
-            } else {
-                // This way no testing information is leaked - if you want to give students
-                // feedback on why they failed use a message.
-                this.currentGradedTestResult.addOutput("No description provided");
-            }
-            this.currentGradedTestResult.addOutput("\n");
-            numFailedGradedTests++;
-            this.currentGradedTestResult.setPassed(false);
-        }
+    public void reportingEntryPublished(TestIdentifier testIdentifier, ReportEntry entry) {
+        System.out.println("WARNING:: reportingEntryPublished" + entry.toString());
     }
-
 }
