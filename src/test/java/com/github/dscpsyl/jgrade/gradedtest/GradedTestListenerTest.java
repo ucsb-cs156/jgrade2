@@ -30,22 +30,19 @@ public class GradedTestListenerTest {
     }
 
     // Method established in Grader.runJUnitGradedTests
-    private void runWithListenerForExample(Class<?> exampleUnitTests) {
+    private void runWithListenerForExample(Class<?> exampleUnitTests, GradedTestListener listener) {
         LauncherDiscoveryRequest request = LauncherDiscoveryRequestBuilder.request()
                 .selectors(selectClass(exampleUnitTests))
                 .build();
 
-        GradedTestListener listener = new GradedTestListener();
-
         LauncherSession session = LauncherFactory.openSession();
         Launcher launcher = session.getLauncher();
-        launcher.registerTestExecutionListeners(listener);
         TestPlan testPlan = launcher.discover(request);
-        launcher.execute(testPlan);
+        launcher.execute(testPlan, listener);
     }
 
-    private GradedTestResult getOnlyGradedTestResult(Class<?> exampleUnitTests) {
-        runWithListenerForExample(exampleUnitTests);
+    private GradedTestResult getOnlyGradedTestResult(Class<?> exampleUnitTests, GradedTestListener listener) {
+        runWithListenerForExample(exampleUnitTests, listener);
         List<GradedTestResult> results = this.listener.getGradedTestResults();
         assertEquals(1, results.size());
         return results.get(0);
@@ -58,19 +55,19 @@ public class GradedTestListenerTest {
 
     @Test
     public void basicCountGradedTests() {
-        runWithListenerForExample(BasicGradedTests.class);
+        runWithListenerForExample(BasicGradedTests.class, this.listener);
         assertEquals(2, listener.getNumGradedTests());
     }
 
     @Test
     public void onlyCountsGradedTests() {
-        runWithListenerForExample(NotAllTestsGraded.class);
+        runWithListenerForExample(NotAllTestsGraded.class, this.listener);
         assertEquals(1, listener.getNumGradedTests());
     }
 
     @Test
     public void addsDefaultGradedTestResult() {
-        GradedTestResult result = getOnlyGradedTestResult(SingleDefaultGradedTest.class);
+        GradedTestResult result = getOnlyGradedTestResult(SingleDefaultGradedTest.class, this.listener);
         assertEquals(GradedTestResult.DEFAULT_NAME, result.getName());
         assertEquals(GradedTestResult.DEFAULT_NUMBER, result.getNumber());
         assertEquals(GradedTestResult.DEFAULT_POINTS, result.getPoints(), 0.0);
@@ -79,7 +76,7 @@ public class GradedTestListenerTest {
 
     @Test
     public void addsCustomGradedTestResult() {
-        GradedTestResult result = getOnlyGradedTestResult(SingleCustomGradedTest.class);
+        GradedTestResult result = getOnlyGradedTestResult(SingleCustomGradedTest.class, this.listener);
         assertEquals(EXAMPLE_NAME, result.getName());
         assertEquals(EXAMPLE_NUMBER, result.getNumber());
         assertEquals(EXAMPLE_POINTS, result.getPoints(), 0.0);
@@ -88,45 +85,46 @@ public class GradedTestListenerTest {
 
     @Test
     public void correctlyCountsFailedGradedTest() {
-        GradedTestResult result = getOnlyGradedTestResult(SingleFailedGradedTest.class);
+        GradedTestResult result = getOnlyGradedTestResult(SingleFailedGradedTest.class, this.listener);
         assertEquals(1, listener.getNumFailedGradedTests());
         assertEquals(0.0, result.getScore(), 0.0);
     }
 
     @Test
     public void setsScoreToZeroForFailedTest() {
-        GradedTestResult result = getOnlyGradedTestResult(SingleFailedGradedTest.class);
+        GradedTestResult result = getOnlyGradedTestResult(SingleFailedGradedTest.class, this.listener);
         assertEquals(0.0, result.getScore(), 0.0);
     }
 
     @Test
     public void setsScoreToMaxForPassedTest() {
-        GradedTestResult result = getOnlyGradedTestResult(SingleCustomGradedTest.class);
+        GradedTestResult result = getOnlyGradedTestResult(SingleCustomGradedTest.class, this.listener);
         assertEquals(EXAMPLE_POINTS, result.getScore(), 0.0);
     }
 
     @Test
     public void onlyCountsFailedIfGradedTest() {
-        runWithListenerForExample(MultipleFailOneGradedTest.class);
+        runWithListenerForExample(MultipleFailOneGradedTest.class, this.listener);
         assertEquals(1, listener.getNumFailedGradedTests());
     }
 
     @Test
     public void capturesOutputFromTest() {
-        GradedTestResult result = getOnlyGradedTestResult(TestWithOutput.class);
+        GradedTestResult result = getOnlyGradedTestResult(TestWithOutput.class, this.listener);
         assertEquals(EXAMPLE_STRING, result.getOutput());
     }
 
     @Test
     public void outputHasFailMessage() {
-        GradedTestResult result = getOnlyGradedTestResult(SingleFailWithMessageGradedTest.class);
+        GradedTestResult result = getOnlyGradedTestResult(SingleFailWithMessageGradedTest.class, this.listener);
+        System.out.println(EXAMPLE_MESSAGE);
+        System.out.println(result.getOutput());
         assertTrue(result.getOutput().contains(EXAMPLE_MESSAGE));
     }
 
-    //! FIXME?
     @Test
     public void addsRegularFailureToStringIfNoMessage() {
-        GradedTestResult result = getOnlyGradedTestResult(SingleFailedGradedTest.class);
+        GradedTestResult result = getOnlyGradedTestResult(SingleFailedGradedTest.class, this.listener);
         assertNotEquals("", result.getOutput());
     }
 
