@@ -134,8 +134,8 @@ public class GradedTestListener implements TestExecutionListener {
 
     /**
      * Called when the execution of the {@link TestPlan} has started,
-     * <em>before</em> any test has been executed. <b>Currently empty and
-     * does not have any use.<b>
+     * <em>before</em> any test has been executed. Currently empty and
+     * does not have any use.
      *
      * @param testPlan describes the tree of tests about to be executed
      */
@@ -145,8 +145,8 @@ public class GradedTestListener implements TestExecutionListener {
 
     /**
      * Called when the execution of the {@link TestPlan} has finished,
-     * <em>after</em> all tests have been executed.<b>Currently empty and
-     * does not have any use.<b>
+     * <em>after</em> all tests have been executed.Currently empty and
+     * does not have any use.
      *
      * @param testPlan describes the tree of tests that have been executed
      */
@@ -255,10 +255,10 @@ public class GradedTestListener implements TestExecutionListener {
      * The {@link TestExecutionResult} describes the result of the execution
      * for the supplied {@code TestIdentifier}. The result does not include or
      * aggregate the results of its children. For example, a container with a
-     * failing test will be reported as {@link Status#SUCCESSFUL SUCCESSFUL} even
-     * if one or more of its children are reported as {@link Status#FAILED FAILED}.
+     * failing test will be reported as SUCCESSFUL even if one or more of its 
+     * children are reported as FAILED.
      * 
-     * <p> From {@link jGrade}, this is a combination of <code>testFinished</code>
+     * <p> Compared to the origional jGrade, this is a combination of <code>testFinished</code>
      * <code>testStarted</code>, and <code>testFailure</code>. It will create the 
      * new {@link GradedTestResult} and add it to the list of results after the test
      * has finished. It will also set the correct score for the test.

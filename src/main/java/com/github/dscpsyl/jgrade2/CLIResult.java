@@ -3,16 +3,27 @@ package com.github.dscpsyl.jgrade2;
 import java.util.List;
 
 
-/** For the result of interaction with a command line interface program. */
+/** 
+ * For the result of interaction with a command line interface program. 
+*/
 public interface CLIResult {
 
     /**
      * Enumeration for the different types of streams to get output for,
      * including STDOUT and STDERR.
+     * @see #getOutput(STREAM)
      */
     enum STREAM {
-        STDOUT, STDERR;
-    }
+        /**
+         * Standard output.
+         */
+        STDOUT, 
+        
+        /**
+         * Standard error.
+         */
+        STDERR
+    };
 
     /**
      * Get the output for the specified stream.
