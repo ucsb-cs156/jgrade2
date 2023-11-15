@@ -1,4 +1,4 @@
-package com.github.dscpsyl.jgrade.gradescope;
+package com.github.dscpsyl.jgrade2.gradescope;
 
 /**
  * An exception for when the JSON to output to Gradescope does not match the

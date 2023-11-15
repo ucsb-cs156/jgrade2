@@ -1,9 +1,10 @@
-package com.github.dscpsyl.jgrade;
+package com.github.dscpsyl.jgrade2;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.BeforeEach;
 
-import com.github.dscpsyl.jgrade.gradedtest.GradedTestResult;
+import com.github.dscpsyl.jgrade2.gradedtest.GradedTestResult;
+
+import org.junit.jupiter.api.BeforeEach;
 
 import java.util.List;
 

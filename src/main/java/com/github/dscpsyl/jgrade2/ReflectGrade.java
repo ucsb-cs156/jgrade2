@@ -1,4 +1,4 @@
-package com.github.dscpsyl.jgrade;
+package com.github.dscpsyl.jgrade2;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;

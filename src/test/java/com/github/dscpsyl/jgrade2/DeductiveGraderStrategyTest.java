@@ -1,11 +1,13 @@
-package com.github.dscpsyl.jgrade;
+package com.github.dscpsyl.jgrade2;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.BeforeEach;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import com.github.dscpsyl.jgrade.gradedtest.GradedTestResult;
-import static com.github.dscpsyl.jgrade.gradedtest.GradedTestResult.HIDDEN;
+import com.github.dscpsyl.jgrade2.gradedtest.GradedTestResult;
+
+import org.junit.jupiter.api.BeforeEach;
+
+import static com.github.dscpsyl.jgrade2.gradedtest.GradedTestResult.HIDDEN;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.ArrayList;
 import java.util.List;

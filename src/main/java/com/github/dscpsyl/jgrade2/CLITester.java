@@ -1,4 +1,4 @@
-package com.github.dscpsyl.jgrade;
+package com.github.dscpsyl.jgrade2;
 
 import org.junit.jupiter.api.BeforeEach;
 

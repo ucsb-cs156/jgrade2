@@ -1,6 +1,7 @@
-package com.github.dscpsyl.jgrade.gradedtest;
+package com.github.dscpsyl.jgrade2.gradedtest;
 
 import org.junit.jupiter.api.Test;
+
 import org.junit.jupiter.api.BeforeEach;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;

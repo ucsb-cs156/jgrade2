@@ -1,8 +1,8 @@
-package com.github.dscpsyl.jgrade;
+package com.github.dscpsyl.jgrade2;
 
 import java.util.List;
 
-import com.github.dscpsyl.jgrade.gradedtest.GradedTestResult;
+import com.github.dscpsyl.jgrade2.gradedtest.GradedTestResult;
 
 /**
  * Strategy to grade deductively. This strategy will take a point value,

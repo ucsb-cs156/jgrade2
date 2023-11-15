@@ -1,4 +1,4 @@
-package com.github.dscpsyl.jgrade.gradedtest;
+package com.github.dscpsyl.jgrade2.gradedtest;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

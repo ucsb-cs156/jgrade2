@@ -1,4 +1,4 @@
-package com.github.dscpsyl.jgrade;
+package com.github.dscpsyl.jgrade2;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -8,13 +8,13 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
-import com.github.dscpsyl.jgrade.gradedtest.GradedTestResult;
+import com.github.dscpsyl.jgrade2.gradedtest.GradedTestResult;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
-import static com.github.dscpsyl.jgrade.gradedtest.GradedTestResult.VISIBLE;
+import static com.github.dscpsyl.jgrade2.gradedtest.GradedTestResult.VISIBLE;
 
 import java.io.IOException;
 import java.io.StringReader;

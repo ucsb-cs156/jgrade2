@@ -1,7 +1,4 @@
-package com.github.dscpsyl.jgrade;
-
-import com.github.dscpsyl.jgrade.gradedtest.GradedTestListener;
-import com.github.dscpsyl.jgrade.gradedtest.GradedTestResult;
+package com.github.dscpsyl.jgrade2;
 
 import static org.junit.platform.engine.discovery.DiscoverySelectors.selectClass;
 
@@ -12,6 +9,9 @@ import org.junit.platform.launcher.LauncherSession;
 import org.junit.platform.launcher.TestPlan;
 import org.junit.platform.launcher.core.LauncherDiscoveryRequestBuilder;
 import org.junit.platform.launcher.core.LauncherFactory;
+
+import com.github.dscpsyl.jgrade2.gradedtest.GradedTestListener;
+import com.github.dscpsyl.jgrade2.gradedtest.GradedTestResult;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -206,7 +206,7 @@ public class Grader {
 
     /**
      * Runs JUnit tests and attaches a {@link GradedTestListener} to listen
-     * for all {@link com.github.dscpsyl.jgrade.gradedtest.GradedTest}s and add the
+     * for all {@link com.github.dscpsyl.jgrade2.gradedtest.GradedTest}s and add the
      * created {@link GradedTestResult}s. If class <code>MyTests</code> has
      * graded test JUnit test methods, then call this method with
      * <code>MyTests.class</code>. Similarly can use JUnit's

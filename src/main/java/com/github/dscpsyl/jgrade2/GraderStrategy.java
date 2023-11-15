@@ -1,8 +1,8 @@
-package com.github.dscpsyl.jgrade;
+package com.github.dscpsyl.jgrade2;
 
 import java.util.List;
 
-import com.github.dscpsyl.jgrade.gradedtest.GradedTestResult;
+import com.github.dscpsyl.jgrade2.gradedtest.GradedTestResult;
 
 /**
  * Interface for the strategy design pattern on top of a {@link Grader} object.

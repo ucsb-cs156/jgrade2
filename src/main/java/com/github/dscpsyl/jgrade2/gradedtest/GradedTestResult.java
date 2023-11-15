@@ -1,4 +1,4 @@
-package com.github.dscpsyl.jgrade.gradedtest;
+package com.github.dscpsyl.jgrade2.gradedtest;
 
 /**
  * A class for the data that models a graded test. Primarily based on the
