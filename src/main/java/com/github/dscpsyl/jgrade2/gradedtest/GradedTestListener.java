@@ -81,21 +81,25 @@ public class GradedTestListener implements TestExecutionListener {
 
     // <editor-fold "desc="helpers">
 
-    /** 
+    /**
      * Called when analyzing the test that finished executing. Given a
      * {@link TestIdentifier}, it will try to get the {@link TestSource}.
      * Using this, it will try to return a {@link MethodSource}.
-     * 
+     *
      * @param testIdentifier the identifier of the test that finished
-     * 
+     *
      * @return An optional {@link MethodSource}
      */
-     public Optional<MethodSource> getTestMethodSource(TestIdentifier testIdentifier) {
+    public Optional<MethodSource> getTestMethodSource(TestIdentifier testIdentifier) {
 
-        if (!testIdentifier.isTest()) return Optional.empty();
+        if (!testIdentifier.isTest()) {
+            return Optional.empty();
+        }
 
         Optional<TestSource> oTestSource = testIdentifier.getSource();
-        if (!oTestSource.isPresent()) return Optional.empty();
+        if (!oTestSource.isPresent()) {
+            return Optional.empty();
+        }
 
 
         TestSource abstraTestSource = oTestSource.get();
@@ -108,24 +112,23 @@ public class GradedTestListener implements TestExecutionListener {
         }
     }
 
-    /** 
+    /**
      * Called when analyzing the test that finished executing. Given a
      * {@link MethodSource}, it will see if the method has a {@link GradedTest}
      * annotation and return it.
-     * 
-     * @param ms of the test that finished. Can be returned from
-     * {@link #getTestMethodSource(TestIdentifier)}
-     * 
+     *
+     * @param ms of the test that finished. Can be returned from {@link #getTestMethodSource(TestIdentifier)}
+     *
      * @return An optional {@link GradedTest}
      */
-     public Optional<GradedTest> getGradedTestAnnotation(MethodSource ms) {
+    public Optional<GradedTest> getGradedTestAnnotation(MethodSource ms) {
 
         try {
             Method testMethod = ms.getJavaMethod();
             GradedTest gradedTestAnnotation = testMethod.getAnnotation(GradedTest.class);
             return Optional.ofNullable(gradedTestAnnotation);
 
-        } catch(PreconditionViolationException pve) { // required for getJavaMethod() to be safe
+        } catch (PreconditionViolationException pve) { // required for getJavaMethod() to be safe
             return Optional.empty();
         }
     }
@@ -160,14 +163,14 @@ public class GradedTestListener implements TestExecutionListener {
      * <p>
      * A <em>dynamic test</em> is a test that is not known a-priori and
      * therefore not contained in the original {@link TestPlan}.
-     * 
+     *
      * <p>
      * Currently, it will log a warning as this is not expected to happen.
      * Tests should be created and registered before the test plan is
      * executed. However, even if it is registered dynamically, there is no
      * problem as the {@link GradedTestResult} will be created when the test
      * is finished.
-     * 
+     *
      *
      * @param testIdentifier the identifier of the newly registered test
      *                       or container
@@ -190,7 +193,7 @@ public class GradedTestListener implements TestExecutionListener {
      * A skipped test or subtree of tests will never be reported as
      * {@linkplain #executionStarted started} or
      * {@linkplain #executionFinished finished}.
-     * 
+     *
      * <p>
      * This will log out the warning and reason for skipping the test. It will be
      * up to the user to determine if this is a problem or not.
@@ -205,7 +208,7 @@ public class GradedTestListener implements TestExecutionListener {
 
     }
 
-/**
+    /**
      * Called when the execution of a leaf or subtree of the {@link TestPlan}
      * is about to be started.
      *
@@ -220,11 +223,11 @@ public class GradedTestListener implements TestExecutionListener {
      * This method will be called for a container {@code TestIdentifier}
      * <em>before</em> {@linkplain #executionStarted starting} or
      * {@linkplain #executionSkipped skipping} any of its children.
-     * 
+     *
      * <p>
      * For backwards compatability, this function sets the {@code testOutput} for
      * the class.
-     * 
+     *
      *
      * @param testIdentifier the identifier of the started test or container
      */
@@ -255,11 +258,11 @@ public class GradedTestListener implements TestExecutionListener {
      * The {@link TestExecutionResult} describes the result of the execution
      * for the supplied {@code TestIdentifier}. The result does not include or
      * aggregate the results of its children. For example, a container with a
-     * failing test will be reported as SUCCESSFUL even if one or more of its 
+     * failing test will be reported as SUCCESSFUL even if one or more of its
      * children are reported as FAILED.
-     * 
+     *
      * <p> Compared to the origional jGrade, this is a combination of <code>testFinished</code>
-     * <code>testStarted</code>, and <code>testFailure</code>. It will create the 
+     * <code>testStarted</code>, and <code>testFailure</code>. It will create the
      * new {@link GradedTestResult} and add it to the list of results after the test
      * has finished. It will also set the correct score for the test.
      *
@@ -272,11 +275,15 @@ public class GradedTestListener implements TestExecutionListener {
 
         // Create the current graded test result
         Optional<MethodSource> ms = getTestMethodSource(testIdentifier);
-        if (!ms.isPresent()) return;
+        if (!ms.isPresent()) {
+            return;
+        }
 
         Optional<GradedTest> gradedTestAnnotations = getGradedTestAnnotation(ms.get());
-        if (!gradedTestAnnotations.isPresent()) return;
-        
+        if (!gradedTestAnnotations.isPresent()) {
+            return;
+        }
+
         GradedTest gt = gradedTestAnnotations.get();
         GradedTestResult currentGradedTestResult = new GradedTestResult(
             gt.name(),
@@ -302,7 +309,7 @@ public class GradedTestListener implements TestExecutionListener {
         // Add any output and add to the list of results for this listener
         currentGradedTestResult.addOutput(this.testOutput.toString());
         this.gradedTestResults.add(currentGradedTestResult);
-        
+
         System.setOut(originalOutStream);
     }
 
@@ -312,7 +319,7 @@ public class GradedTestListener implements TestExecutionListener {
      *
      * <p>
      * Can be called at any time during the execution of a test plan.
-     * 
+     *
      * <p> Currently, it will log out a warning and the entry. It will be
      * up to the user to determine if this is a problem or not.
      *
