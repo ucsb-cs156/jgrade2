@@ -225,9 +225,8 @@ public class Grader {
         // Create a new laucher session, attach listener and execute.
         LauncherSession session = LauncherFactory.openSession();
         Launcher launcher = session.getLauncher();
-        launcher.registerTestExecutionListeners(listener);
         TestPlan testPlan = launcher.discover(request);
-        launcher.execute(testPlan);
+        launcher.execute(testPlan, listener);
         
         // Get the results from the listener, grade them, and add them to the Grader.
         List<GradedTestResult> results = listener.getGradedTestResults();
