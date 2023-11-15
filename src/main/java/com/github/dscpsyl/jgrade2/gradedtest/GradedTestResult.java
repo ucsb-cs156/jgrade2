@@ -47,6 +47,8 @@ public class GradedTestResult {
      * @param points The number of points the test is worth.
      * @param visibility The visibility setting of the test.
      * @throws IllegalArgumentException If the visibility is not valid.
+     * 
+     * @see GradedTestResult#VISIBLE
      */
     public GradedTestResult(String name, String number, double points, String visibility)
             throws IllegalArgumentException {

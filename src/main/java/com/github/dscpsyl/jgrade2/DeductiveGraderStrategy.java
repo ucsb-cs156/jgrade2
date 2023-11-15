@@ -43,6 +43,11 @@ public class DeductiveGraderStrategy implements GraderStrategy {
         return this.deductedPoints;
     }
 
+    /**
+     * Grades the list of GradedTestResults.
+     * @param l The list of GradedTestResults to grade.
+     * @return The list of GradedTestResults.
+     */
     @Override
     public void grade(List<GradedTestResult> l) {
         for (GradedTestResult r : l) {
@@ -60,7 +65,11 @@ public class DeductiveGraderStrategy implements GraderStrategy {
         l.add(baseScore);
     }
 
-    // Deduct from r, return the amount deducted
+    /**
+     * Deduct points from a GradedTestResult. 
+     * @param r The GradedTestResult to deduct from.
+     * @return The amount of points deducted.
+     */
     private double deduct(GradedTestResult r) {
         double amountToDeduct = r.getPoints();
         if ((this.deductedPoints + r.getPoints()) > potentialDeductions()) {
@@ -72,7 +81,10 @@ public class DeductiveGraderStrategy implements GraderStrategy {
         return amountToDeduct;
     }
 
-    // Get the amount of possible points that can be deducted in total.
+    /**
+     * Get the amount of points that can be deducted.
+     * @return The amount of points that can be deducted.
+     */
     private double potentialDeductions() {
         return this.startingScore - this.floor;
     }
