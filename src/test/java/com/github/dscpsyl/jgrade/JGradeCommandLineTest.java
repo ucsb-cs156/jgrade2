@@ -43,49 +43,49 @@ public class JGradeCommandLineTest {
     @Test
     public void unknownFlagExits() throws IOException{
         assertThrows(RuntimeException.class, () -> {
-        JGrade.main(new String[] {"-blah"});
+        JGrade2.main(new String[] {"-blah"});
         });
     }
 
     @Test
     public void requiresClassFlag() throws IOException{
         assertThrows(RuntimeException.class, () -> {
-        JGrade.main(new String[] {"-f", "json"});
+        JGrade2.main(new String[] {"-f", "json"});
         });
     }
 
     @Test
     public void acceptsFoundClass() throws IOException{
-        JGrade.main(new String[] {"-c", this.getClass().getCanonicalName()});
+        JGrade2.main(new String[] {"-c", this.getClass().getCanonicalName()});
     }
 
     @Test
     public void acceptsMultipleFlags() throws IOException{
-        JGrade.main(new String[] {"-f", "json", "-c", this.getClass().getCanonicalName()});
+        JGrade2.main(new String[] {"-f", "json", "-c", this.getClass().getCanonicalName()});
     }
 
     @Test
     public void acceptsLongOption() throws IOException{
-        JGrade.main(new String[] {"--format", "json", "-c", this.getClass().getCanonicalName()});
+        JGrade2.main(new String[] {"--format", "json", "-c", this.getClass().getCanonicalName()});
     }
 
     @Test
     public void rejectsNonExistentClass() throws IOException{
         assertThrows(RuntimeException.class, () -> {
-            JGrade.main(new String[] {"-c", "thisClassDoesNotExist"});
+            JGrade2.main(new String[] {"-c", "thisClassDoesNotExist"});
         });
     }
 
     @Test
     public void rejectsInvalidFormatArguments() throws IOException{
         assertThrows(RuntimeException.class, () -> {
-        JGrade.main(new String[] {"-f", "invalid", "-c", this.getClass().getCanonicalName()});
+        JGrade2.main(new String[] {"-f", "invalid", "-c", this.getClass().getCanonicalName()});
         });
     }
 
     @Test
     public void printedValidJson() throws JSONException, IOException{
-        JGrade.main(new String[] {"--format", "json", "-c", this.getClass().getCanonicalName()});
+        JGrade2.main(new String[] {"--format", "json", "-c", this.getClass().getCanonicalName()});
         JSONObject json = new JSONObject(captureOut.toString());
         assertTrue(json.has("tests"));
         JSONObject gradedTestResult = (JSONObject) json.getJSONArray("tests").get(0);

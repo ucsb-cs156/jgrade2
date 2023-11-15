@@ -43,7 +43,7 @@ import java.net.MalformedURLException;
  *      -v,--version<br>
  * </code>
  */
-public final class JGrade {
+public final class JGrade2 {
 
     private static final String VERSION = "2.0.0-a2";
 
@@ -64,7 +64,7 @@ public final class JGrade {
     private static GradescopeJsonFormatter formatter;
 
     // Hide Constructor
-    private JGrade() { }
+    private JGrade2() { }
 
 
     // Throws a RunTimeException instead of calling System.exit();
