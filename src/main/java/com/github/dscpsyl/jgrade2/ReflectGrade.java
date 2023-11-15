@@ -31,7 +31,7 @@ final class ReflectGrade {
      * Load a class from the current directory.
      * <p>
      * Method is borrowed from <a href="https://github.com/phf/jb">https://github.com/phf/jb</a>.
-     * 
+     *
      * @param className The name of the class to load.
      * @return The class object.
      * @throws ClassNotFoundException If the class cannot be found.

@@ -28,7 +28,8 @@ Some possible points could be:
 - [ ] Unit tests (`mvn test`) 100%
 - [ ] Mutation tests (`mvn test pitest:mutationCoverage`) 80%
 - [ ] Test coverage (`mvn test jacoco:report`) 75%/50%
-- [ ] Does the package version in `pom.xml` match that in `jGrade.java`
+- [ ] Checkstyle (`mvn test checkstyle:checkstyle`) 0 errors
+- [ ] Package version in `pom.xml` match that in `jGrade2.java`
 
 ## Linked Issues
 <!--Issues related to the PR-->

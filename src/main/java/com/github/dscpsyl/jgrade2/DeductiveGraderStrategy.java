@@ -65,7 +65,7 @@ public class DeductiveGraderStrategy implements GraderStrategy {
     }
 
     /**
-     * Deduct points from a GradedTestResult. 
+     * Deduct points from a GradedTestResult.
      * @param r The GradedTestResult to deduct from.
      * @return The amount of points deducted.
      */

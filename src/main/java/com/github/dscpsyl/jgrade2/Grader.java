@@ -192,9 +192,9 @@ public class Grader {
         this.graderStrategy = s;
     }
 
-    /** 
-     * Starts (or resumes) the timer for the Grader. 
-    */
+    /**
+     * Starts (or resumes) the timer for the Grader.
+     */
     public void startTimer() {
         this.startTime = System.currentTimeMillis();
     }
@@ -233,7 +233,7 @@ public class Grader {
         Launcher launcher = session.getLauncher();
         TestPlan testPlan = launcher.discover(request);
         launcher.execute(testPlan, listener);
-        
+
         // Get the results from the listener, grade them, and add them to the Grader.
         List<GradedTestResult> results = listener.getGradedTestResults();
         this.graderStrategy.grade(results);
