@@ -233,6 +233,7 @@ public final class JGrade2 {
     /**
      * Main entry point. See usage or run with <code>--help</code>
      * @param args Command line arguments.
+     * @throws IOException If there is an IO error.
      */
     public static void main(String[] args) throws IOException{
         CommandLine line = null;

@@ -122,7 +122,7 @@ public abstract class CLITester {
 
     /**
      * Initializes the command for the test (and is annotated with
-     * {@link Before}. Calls the abstract {@link #getInvocation()} and
+     * {@link BeforeEach}. Calls the abstract {@link #getInvocation()} and
      * initializes a new {@link ProcessBuilder}.
      */
     @BeforeEach

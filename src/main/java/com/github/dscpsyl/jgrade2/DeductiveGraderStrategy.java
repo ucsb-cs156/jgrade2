@@ -46,7 +46,6 @@ public class DeductiveGraderStrategy implements GraderStrategy {
     /**
      * Grades the list of GradedTestResults.
      * @param l The list of GradedTestResults to grade.
-     * @return The list of GradedTestResults.
      */
     @Override
     public void grade(List<GradedTestResult> l) {

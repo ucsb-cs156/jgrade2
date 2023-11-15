@@ -216,8 +216,7 @@ public class Grader {
      * for all {@link com.github.dscpsyl.jgrade2.gradedtest.GradedTest}s and add the
      * created {@link GradedTestResult}s. If class <code>MyTests</code> has
      * graded test JUnit test methods, then call this method with
-     * <code>MyTests.class</code>. Similarly can use JUnit's
-     * {@link org.junit.platform.runners.Suite}. Can alter the list of results added from the
+     * <code>MyTests.class</code>. Can alter the list of results added from the
      * run by setting the {@link GraderStrategy}.
      * @param testSuite The class containing the tests.
      */
