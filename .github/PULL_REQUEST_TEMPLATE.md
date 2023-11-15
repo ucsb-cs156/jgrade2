@@ -25,9 +25,9 @@ Some possible points could be:
 
 ## Tests
 <!--Add any additional tests or required tests-->
-- [ ] Backend Unit tests (`mvn test`) pass
-- [ ] Backend Test coverage (`mvn test jacoco:report`) 100%
-- [ ] Backend Mutation tests (`mvn test pitest:mutationCoverage`) 100% 
+- [ ] Unit tests (`mvn test`) 100%
+- [ ] Mutation tests (`mvn test pitest:mutationCoverage`) 80%
+- [ ] Test coverage (`mvn test jacoco:report`) 75%/50%
 - [ ] Does the package version in `pom.xml` match that in `jGrade.java`
 
 ## Linked Issues
