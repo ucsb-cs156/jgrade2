@@ -1,4 +1,4 @@
-package com.github.dscpsyl.jgrade.gradedtest;
+package com.github.dscpsyl.jgrade2.gradedtest;
 
 import org.junit.platform.engine.TestExecutionResult;
 import org.junit.platform.engine.TestSource;

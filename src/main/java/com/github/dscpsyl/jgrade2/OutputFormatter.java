@@ -1,4 +1,4 @@
-package com.github.dscpsyl.jgrade;
+package com.github.dscpsyl.jgrade2;
 
 /**
  * A formatter that formats data of a {@link Grader} to produce output.

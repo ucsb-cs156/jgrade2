@@ -1,14 +1,15 @@
-package com.github.dscpsyl.jgrade.gradescope;
+package com.github.dscpsyl.jgrade2.gradescope;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import org.junit.jupiter.api.Test;
+
+import com.github.dscpsyl.jgrade2.Grader;
+import com.github.dscpsyl.jgrade2.gradedtest.GradedTestResult;
+
 import org.junit.jupiter.api.BeforeEach;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-
-import com.github.dscpsyl.jgrade.Grader;
-import com.github.dscpsyl.jgrade.gradedtest.GradedTestResult;
 
 public class GradescopeJsonFormatterTest {
 

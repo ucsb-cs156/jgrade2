@@ -1,4 +1,4 @@
-package com.github.dscpsyl.jgrade.gradedtest;
+package com.github.dscpsyl.jgrade2.gradedtest;
 
 import org.junit.jupiter.api.Test;
 import org.junit.platform.launcher.Launcher;
@@ -7,6 +7,7 @@ import org.junit.platform.launcher.LauncherSession;
 import org.junit.platform.launcher.TestPlan;
 import org.junit.platform.launcher.core.LauncherDiscoveryRequestBuilder;
 import org.junit.platform.launcher.core.LauncherFactory;
+
 import org.junit.jupiter.api.BeforeEach;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.platform.engine.discovery.DiscoverySelectors.selectClass;

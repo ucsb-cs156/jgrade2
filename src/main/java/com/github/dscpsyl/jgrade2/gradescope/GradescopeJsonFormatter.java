@@ -1,17 +1,17 @@
-package com.github.dscpsyl.jgrade.gradescope;
+package com.github.dscpsyl.jgrade2.gradescope;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.github.dscpsyl.jgrade.Grader;
-import com.github.dscpsyl.jgrade.OutputFormatter;
-import com.github.dscpsyl.jgrade.gradedtest.GradedTestResult;
+import com.github.dscpsyl.jgrade2.Grader;
+import com.github.dscpsyl.jgrade2.OutputFormatter;
+import com.github.dscpsyl.jgrade2.gradedtest.GradedTestResult;
 
-import static com.github.dscpsyl.jgrade.gradedtest.GradedTestResult.AFTER_DUE_DATE;
-import static com.github.dscpsyl.jgrade.gradedtest.GradedTestResult.AFTER_PUBLISHED;
-import static com.github.dscpsyl.jgrade.gradedtest.GradedTestResult.HIDDEN;
-import static com.github.dscpsyl.jgrade.gradedtest.GradedTestResult.VISIBLE;
+import static com.github.dscpsyl.jgrade2.gradedtest.GradedTestResult.AFTER_DUE_DATE;
+import static com.github.dscpsyl.jgrade2.gradedtest.GradedTestResult.AFTER_PUBLISHED;
+import static com.github.dscpsyl.jgrade2.gradedtest.GradedTestResult.HIDDEN;
+import static com.github.dscpsyl.jgrade2.gradedtest.GradedTestResult.VISIBLE;
 
 import java.util.List;
 

@@ -1,13 +1,14 @@
-package com.github.dscpsyl.jgrade;
+package com.github.dscpsyl.jgrade2;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import org.junit.jupiter.api.Test;
+
+import com.github.dscpsyl.jgrade2.gradedtest.GradedTestResult;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.AfterEach;
-
-import com.github.dscpsyl.jgrade.gradedtest.GradedTestResult;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
