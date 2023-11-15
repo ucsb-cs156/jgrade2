@@ -36,7 +36,7 @@
         <junit-platform.version>1.10.0</junit-platform.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <jacoco-coverage.version>0.8.11</jacoco-coverage.version>
-        <pitest-mutation.version>LATEST</pitest-mutation.version>
+        <pitest-mutation.version>1.15.3</pitest-mutation.version>
         <pitest-junit5.version>1.2.1</pitest-junit5.version>
     </properties>
 
@@ -140,7 +140,7 @@
                             </descriptorRefs>
                             <archive>
                                 <manifest>
-                                    <mainClass>com.github.dscpsyl.jgrade.JGrade2</mainClass>
+                                    <mainClass>com.github.dscpsyl.jgrade2.JGrade2</mainClass>
                                 </manifest>
                             </archive>
                         </configuration>
