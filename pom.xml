@@ -164,9 +164,13 @@
                 <configuration>
                     <excludes>
                         <!-- Hard to test for specific failures due to inability to create a TestIdentifier manually-->
-                        <exclude>/com/github/dscpsyl/jgrade2/gradedtest/GradedTestListener.class</exclude>
+                        <exclude>**/com/github/dscpsyl/jgrade2/gradedtest/GradedTestListener.class</exclude>
                         <!-- Nothing to do-->
-                        <exclude>/com/github/dscpsyl/jgrade2/../*DefaultGraderStrategy.*</exclude>
+                        <exclude>**/com/github/dscpsyl/jgrade2/**/DefaultGraderStrategy.*</exclude>
+                        <!-- Mostly private classes and cannot be unit tested-->
+                        <exclude>**/com/github/dscpsyl/jgrade2/**/*CheckstyleGrader.*</exclude>
+                        <!-- CLI interface and difficult to unit test-->
+                        <exclude>**/com/github/dscpsyl/jgrade2/**/*CLITester.*</exclude>
                     </excludes>
                 </configuration>
                 <executions>
