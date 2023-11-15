@@ -286,25 +286,19 @@ public class GradedTestListener implements TestExecutionListener {
         // Check the status of the test and set the score
         if (testExecutionResult.getStatus() == TestExecutionResult.Status.SUCCESSFUL) { // All passed, full points
             currentGradedTestResult.setScore(gt.points());
-        } else if (testExecutionResult.getStatus() == TestExecutionResult.Status.FAILED) { // Failed, no points
+        } else { // Failed or aborted, no points
             currentGradedTestResult.setScore(0);
-            currentGradedTestResult.addOutput("FAILED:: \n");
-            this.numFailedGradedTests++;
-            currentGradedTestResult.setPassed(false);
-        } else { // Aborted, no points, but give info if available
-            currentGradedTestResult.setScore(0);
-            currentGradedTestResult.addOutput("ABORTED:: \n");
+            currentGradedTestResult.addOutput("FAILED/ABORTED:: \n");
             Optional<Throwable> t = testExecutionResult.getThrowable();
             if (t.isPresent()) {
                 currentGradedTestResult.addOutput(t.get().toString());
             }
             this.numFailedGradedTests++;
             currentGradedTestResult.setPassed(false);
-
         }
 
         // Add any output and add to the list of results for this listener
-        currentGradedTestResult.addOutput(this.testOutput.toString() + "\n");
+        currentGradedTestResult.addOutput(this.testOutput.toString());
         this.gradedTestResults.add(currentGradedTestResult);
         
         System.setOut(originalOutStream);
