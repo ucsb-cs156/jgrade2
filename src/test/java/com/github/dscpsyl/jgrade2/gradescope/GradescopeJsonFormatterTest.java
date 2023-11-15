@@ -9,6 +9,8 @@ import com.github.dscpsyl.jgrade2.Grader;
 import com.github.dscpsyl.jgrade2.gradedtest.GradedTestResult;
 
 import org.junit.jupiter.api.BeforeEach;
+
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class GradescopeJsonFormatterTest {
@@ -65,5 +67,20 @@ public class GradescopeJsonFormatterTest {
         assertThrows(GradescopeJsonException.class, () -> {
         unit.setStdoutVisibility("invisible");
         });
+    }
+
+    @Test
+    public void visibilitySelect(){
+        assertAll(()->{unit.setVisibility("hidden");});
+    }
+
+    @Test
+    public void stdOutVisibilitySelect(){
+        assertAll(()->{unit.setStdoutVisibility("after_published");});
+    }
+
+    @Test
+    public void prettyPrintSelect(){
+        assertAll(()->{unit.setPrettyPrint(2);});
     }
 }
