@@ -79,6 +79,8 @@ public class GradedTestListener implements TestExecutionListener {
 
     // </editor-fold>
 
+    // <editor-fold "desc="helpers">
+
     /** 
      * Called when analyzing the test that finished executing. Given a
      * {@link TestIdentifier}, it will try to get the {@link TestSource}.
@@ -111,7 +113,7 @@ public class GradedTestListener implements TestExecutionListener {
      * {@link MethodSource}, it will see if the method has a {@link GradedTest}
      * annotation and return it.
      * 
-     * @param {@link MethodSource} of the test that finished. Can be returned from
+     * @param ms of the test that finished. Can be returned from
      * {@link #getTestMethodSource(TestIdentifier)}
      * 
      * @return An optional {@link GradedTest}
@@ -127,6 +129,8 @@ public class GradedTestListener implements TestExecutionListener {
             return Optional.empty();
         }
     }
+
+    // </editor-fold>
 
     /**
      * Called when the execution of the {@link TestPlan} has started,
@@ -262,8 +266,6 @@ public class GradedTestListener implements TestExecutionListener {
      * @param testIdentifier      the identifier of the finished test or container
      * @param testExecutionResult the (unaggregated) result of the execution for
      *                            the supplied {@code TestIdentifier}
-     *
-     * @see TestExecutionResult
      */
     @Override
     public void executionFinished(TestIdentifier testIdentifier, TestExecutionResult testExecutionResult) {

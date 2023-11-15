@@ -31,6 +31,11 @@ import java.util.List;
 public class Grader {
     private static final int NOT_SET = -1;
 
+    /**
+     * A strategy for grading. Can be used to alter the list of
+     * {@link GradedTestResult}s before they are added to the Grader.
+     * @see DeductiveGraderStrategy
+     */
     private class DefaultGraderStrategy implements GraderStrategy {
         public void grade(List<GradedTestResult> l) {
             // Nothing to do.
@@ -187,7 +192,9 @@ public class Grader {
         this.graderStrategy = s;
     }
 
-    /** Starts (or resumes) the timer for the Grader. */
+    /** 
+     * Starts (or resumes) the timer for the Grader. 
+    */
     public void startTimer() {
         this.startTime = System.currentTimeMillis();
     }

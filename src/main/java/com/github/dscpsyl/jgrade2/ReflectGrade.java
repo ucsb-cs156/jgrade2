@@ -22,10 +22,22 @@ import java.util.TreeMap;
  */
 final class ReflectGrade {
 
-    // Appease checkstyle
+    /**
+     * Private constructor to prevent instantiation.
+     */
     private ReflectGrade() { }
 
-    // Borrowed mostly from phf
+    /**
+     * Load a class from the current directory.
+     * <p>
+     * Method is borrowed from <a href="https://github.com/phf/jb">https://github.com/phf/jb</a>.
+     * 
+     * @param className The name of the class to load.
+     * @return The class object.
+     * @throws ClassNotFoundException If the class cannot be found.
+     * @throws MalformedURLException If the URL is malformed.
+     * @throws IOException If there is an IO error.
+     */
     static Class<?> load(String className) throws ClassNotFoundException, MalformedURLException, IOException {
         URL url = FileSystems.getDefault().getPath("").toUri().toURL();
         try (URLClassLoader loader = new URLClassLoader(new URL[]{url})) {
@@ -35,17 +47,27 @@ final class ReflectGrade {
         }
     }
 
+    /**
+     * A helper class to hold the three types of grade methods.
+     */
     private static class GradeMethods {
         private SortedMap<String, Method> beforeGradeMethods;
         private SortedMap<String, Method> doneGradeMethods;
         private SortedMap<String, Method> gradeMethods;
 
+        /**
+         * Create a new GradeMethods object.
+         */
         GradeMethods() {
             beforeGradeMethods = new TreeMap<>();
             doneGradeMethods = new TreeMap<>();
             gradeMethods = new TreeMap<>();
         }
 
+        /**
+         * Convert the maps to a list of methods.
+         * @return The list of methods.
+         */
         List<Method> toMethodList() {
             List<Method> l = new ArrayList<>();
             l.addAll(beforeGradeMethods.values());
@@ -55,6 +77,11 @@ final class ReflectGrade {
         }
     }
 
+    /**
+     * Check if the method has a grade annotation. Should only have 1.
+     * @param m The method to check.
+     * @return True if the method has a grade annotation, false otherwise.
+     */
     private static boolean hasGradeAnnotation(Method m) {
         int num = (m.isAnnotationPresent(BeforeGrading.class) ? 1 : 0)
                 + (m.isAnnotationPresent(Grade.class) ? 1 : 0)
@@ -67,6 +94,11 @@ final class ReflectGrade {
         return num == 1;
     }
 
+    /**
+     * Add the method to the appropriate map if it is valid.
+     * @param gradeMethods The GradeMethods object to add to.
+     * @param m The method to add.
+     */
     private static void addIfValid(GradeMethods gradeMethods, Method m) {
         if (!hasGradeAnnotation(m) || !isValidSignature(m)) {
             return;
@@ -81,6 +113,11 @@ final class ReflectGrade {
         }
     }
 
+    /**
+     * Check if the method has the proper signature.
+     * @param m The method to check.
+     * @return True if the method has the proper signature, false otherwise.
+     */
     private static boolean isValidSignature(Method m) {
         if (m.getParameterCount() != 1) {
             System.err.printf("method %s should have exactly 1 parameter\n", m.getName());
@@ -99,6 +136,11 @@ final class ReflectGrade {
         return false;
     }
 
+    /**
+     * Get the list of grade methods from the class.
+     * @param c The class to get the grade methods from.
+     * @return The list of grade methods.
+     */
     static List<Method> graderMethods(Class<?> c) {
         GradeMethods gradeMethods = new GradeMethods();
         for (Method m: c.getMethods()) {

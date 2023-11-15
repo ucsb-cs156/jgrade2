@@ -21,38 +21,69 @@ import java.util.List;
  */
 public abstract class CLITester {
 
+    /**
+     * An interface for the result of a CLI execution. This is returned from
+     * {@link #runCommand()} and {@link #runCommand(String)}.
+     */
     static class ExecutionResult implements CLIResult {
         private String stdOutOutput;
         private String stdErrOutput;
         private int exitValue;
 
+        /**
+         * Create a new ExecutionResult with the given output and exit value.
+         * @param stdOutOutput The output from stdout.
+         * @param stdErrOutput The output from stderr.
+         * @param exitValue The exit value of the program.
+         */
         ExecutionResult(String stdOutOutput, String stdErrOutput, int exitValue) {
             this.stdOutOutput = stdOutOutput;
             this.stdErrOutput = stdErrOutput;
             this.exitValue = exitValue;
         }
 
+        /**
+         * Get the output from the execution.
+         * @param stream The stream to get the output from.
+         * @return The output from the execution.
+         */
         @Override
         public String getOutput(STREAM stream) {
             return stream == STREAM.STDOUT ? this.stdOutOutput : this.stdErrOutput;
         }
 
+        /**
+         * Get the output from stdout.
+         * @return The output from stdout.
+         */
         @Override
         public String getOutput() {
             return getOutput(STREAM.STDOUT);
         }
 
+        /**
+         * Get the output in line form.
+         * @param stream The stream to get the output from.
+         * @return The output from the execution in line form.
+         */
         @Override
         public List<String> getOutputByLine(STREAM stream) {
             return splitByLines(getOutput(stream));
         }
 
+        /**
+         * Get the output from stdout in line form.
+         * @return The output from stdout in line form.
+         */
         @Override
         public int exitValue() {
             return this.exitValue;
         }
 
-
+        /**
+         * Dumps the output into System.out. If there is output from stderr,
+         * it will be printed after the stdout output.
+         */
         void dump() {
             System.out.println(stdOutOutput);
             if (stdErrOutput.length() > 0) {
@@ -61,6 +92,11 @@ public abstract class CLITester {
             }
         }
 
+        /**
+         * Splits a string by lines.
+         * @param s The string to split.
+         * @return The list of lines.
+         */
         private static List<String> splitByLines(String s) {
             return s.isEmpty() ? new ArrayList<>() : Arrays.asList(s.split("[\\r\\n]+"));
         }
@@ -207,7 +243,12 @@ public abstract class CLITester {
         return executeProcess(builder, null);
     }
 
-    // Reads from an InputStream and returns the String.
+    /**
+     * Get a String from an InputStream.
+     * @param stream The stream to get the String from.
+     * @return The String from the stream.
+     * @throws IOException If there is an error reading from the stream.
+     */
     private static String getStringFromStream(InputStream stream) throws IOException {
         byte[] streamBytes = new byte[stream.available()];
         stream.read(streamBytes, 0, streamBytes.length);

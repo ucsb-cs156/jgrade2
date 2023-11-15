@@ -46,10 +46,18 @@ public class GradescopeJsonFormatter implements OutputFormatter {
         this.prettyPrint = -1;
     }
 
+    /**
+     * Returns whether or not the formatter has a visibility set.
+     * @return True if the formatter has a visibility set, false otherwise.
+     */
     private boolean hasVisibility() {
         return this.visibility != null;
     }
 
+    /**
+     * Returns whether or not the formatter has a visibility set for standard out.
+     * @return True if the formatter has a visibility set for standard out, false otherwise.
+     */
     private boolean hasStdoutVisibility() {
         return this.stdoutVisibility != null;
     }
@@ -93,7 +101,12 @@ public class GradescopeJsonFormatter implements OutputFormatter {
 
     // </editor-fold>
 
-
+    /**
+     * Formats the {@link Grader} into a JSON string.
+     * @param grader The grader to format.
+     * @return The JSON string.
+     * @throws GradescopeJsonException If the grader is not valid.
+     */
     @Override
     public String format(Grader grader) {
         json = new JSONObject();
@@ -105,6 +118,12 @@ public class GradescopeJsonFormatter implements OutputFormatter {
         }
     }
 
+    /**
+     * Assembles a {@link GradedTestResult} into a JSON object.
+     * @param r The result to assemble.
+     * @return The JSON object.
+     * @throws GradescopeJsonException If the result is not valid.
+     */
     private JSONObject assemble(GradedTestResult r) {
         try {
             return new JSONObject()
@@ -119,6 +138,12 @@ public class GradescopeJsonFormatter implements OutputFormatter {
         }
     }
 
+    /**
+     * Assembles a list of {@link GradedTestResult}s into a JSON array.
+     * @param l The list of results to assemble.
+     * @return The JSON array.
+     * @see #assemble(GradedTestResult)
+     */
     private JSONArray assemble(List<GradedTestResult> l) {
         JSONArray testResults = new JSONArray();
         for (GradedTestResult r : l) {
@@ -127,6 +152,12 @@ public class GradescopeJsonFormatter implements OutputFormatter {
         return testResults;
     }
 
+    /**
+     * Assembles a {@link Grader} into a JSON object.
+     * @param grader The grader to assemble.
+     * @param json The JSON object to assemble into.
+     * @throws GradescopeJsonException If the grader is not valid.
+     */
     private void assemble(Grader grader, JSONObject json) throws GradescopeJsonException {
         try {
             validateGrader(grader);
@@ -156,6 +187,11 @@ public class GradescopeJsonFormatter implements OutputFormatter {
         }
     }
 
+    /**
+     * Validates a {@link Grader} to make sure it is valid for the formatter.
+     * @param grader The grader to validate.
+     * @throws GradescopeJsonException If the grader is not valid.
+     */
     private void validateGrader(Grader grader) {
         if (!(grader.hasScore() || grader.hasGradedTestResults())) {
             throw new GradescopeJsonException("Gradescope Json must have either tests or score set");
@@ -167,6 +203,11 @@ public class GradescopeJsonFormatter implements OutputFormatter {
         assert allValidVisibility(grader.getGradedTestResults());
     }
 
+    /**
+     * Checks if all of the {@link GradedTestResult}s have valid visibilities.
+     * @param results The list of results to check.
+     * @return True if all of the visibilities are valid, false otherwise.
+     */
     private static boolean allValidVisibility(List<GradedTestResult> results) {
         for (GradedTestResult r : results) {
             if (!isValidVisibility(r.getVisibility())) {
@@ -176,6 +217,11 @@ public class GradescopeJsonFormatter implements OutputFormatter {
         return true;
     }
 
+    /**
+     * Checks if a visibility is valid.
+     * @param visibility The visibility to check.
+     * @return True if the visibility is valid, false otherwise.
+     */
     private static boolean isValidVisibility(String visibility) {
         return visibility == null  // Just wasn't set, which is OK
                 || visibility.equals(VISIBLE)

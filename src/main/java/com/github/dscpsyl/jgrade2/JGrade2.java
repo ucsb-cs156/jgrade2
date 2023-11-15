@@ -63,22 +63,36 @@ public final class JGrade2 {
 
     private static GradescopeJsonFormatter formatter;
 
-    // Hide Constructor
+    /**
+     * Private constructor to prevent instantiation.
+     */
     private JGrade2() { }
 
 
-    // Throws a RunTimeException instead of calling System.exit();
+    /**
+     * A fatal error occurred. Prints the message and stack trace and exits.
+     * @param msg The message to print
+     * @param e The exception to print
+     */
     private static void fatal(String msg, Exception e) {
         msg = "[FATAL] A fatal jGrade error occurred: \n" + msg;
         throw new RuntimeException(msg, e);
     }
 
+    /**
+     * Prints the usage message.
+     */
     private static void usage() {
         HelpFormatter formatter = new HelpFormatter();
         formatter.setWidth(80);
         formatter.printHelp("jgrade", getOptions());
     }
 
+    /**
+     * Outputs the result of the grading if set by the user
+     * @param grader The grader to output.
+     * @param line The command line arguments.
+     */
     private static void outputResult(Grader grader, CommandLine line) {
         if (line.hasOption(NO_OUTPUT_OPT)) {
             return;
@@ -98,6 +112,11 @@ public final class JGrade2 {
         }
     }
 
+    /**
+     * Initializes the grader based on the command line arguments.
+     * @param line The command line arguments.
+     * @return The initialized grader.
+     */
     private static Grader initGrader(CommandLine line) {
         formatter = null;
 
@@ -124,6 +143,11 @@ public final class JGrade2 {
         return grader;
     }
 
+    /**
+     * Grades the class.
+     * @param grader The grader to use.
+     * @param c The class to grade.
+     */
     private static void grade(Grader grader, Class<?> c) {
         Object o = instantiateClass(c);
         for (Method m : ReflectGrade.graderMethods(c)) {
@@ -136,6 +160,11 @@ public final class JGrade2 {
         }
     }
 
+    /**
+     * Instantiates the class to grade.
+     * @param c The class to instantiate.
+     * @return The instantiated class.
+     */
     private static Object instantiateClass(Class<?> c) {
         try {
             return c.getConstructor().newInstance();
@@ -146,6 +175,11 @@ public final class JGrade2 {
         }
     }
 
+    /**
+     * Gets the class to grade.
+     * @param className The name of the class to grade.
+     * @return The class to grade.
+     */
     private static Class<?> getClassToGrade(String className) throws IOException{
         try {
             return ReflectGrade.load(className);
@@ -155,6 +189,10 @@ public final class JGrade2 {
         }
     }
 
+    /**
+     * Gets the options for the command line.
+     * @return The options for the command line.
+     */
     private static Options getOptions() {
         Options options = new Options();
         options.addOption(Option.builder("f").longOpt(FORMAT_OPT)
@@ -182,6 +220,11 @@ public final class JGrade2 {
         return options;
     }
 
+    /**
+     * Reads the command line arguments.
+     * @param args The command line arguments.
+     * @return The parsed command line arguments.
+     */
     private static CommandLine readCommandLine(String[] args) throws ParseException {
         CommandLineParser parser = new DefaultParser();
         return parser.parse(getOptions(), args, false);
