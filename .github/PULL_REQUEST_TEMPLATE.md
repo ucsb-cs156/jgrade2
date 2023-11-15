@@ -28,6 +28,7 @@ Some possible points could be:
 - [ ] Backend Unit tests (`mvn test`) pass
 - [ ] Backend Test coverage (`mvn test jacoco:report`) 100%
 - [ ] Backend Mutation tests (`mvn test pitest:mutationCoverage`) 100% 
+- [ ] Does the package version in `pom.xml` match that in `jGrade.java`
 
 ## Linked Issues
 <!--Issues related to the PR-->
