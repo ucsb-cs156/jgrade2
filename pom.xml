@@ -249,11 +249,16 @@
                         <param>com.github.dscpsyl.jgrade2.*</param>
                     </targetTests>
                     <excludedClasses>
-                        <param></param>
+                        <!--See reason from jacoco test coverage exclusion-->
+                        <param>com.github.dscpsyl.jgrade2.CheckstyleGrader</param>
+                        <!--See reason from jacoco test coverage exclusion-->
+                        <param>com.github.dscpsyl.jgrade2.CLITester*</param>
                     </excludedClasses>
                     <excludedTestClasses></excludedTestClasses>
                     <excludedMethods>
                         <param>flush_and_close_noPitest</param>
+                        <!--Private constructor-->
+                        <param>com.github.dscpsyl.jgrade2.ReflectGrade.ReflectGrade</param>
                     </excludedMethods>
                     <outputFormats>
                         <outputFormat>HTML</outputFormat>
