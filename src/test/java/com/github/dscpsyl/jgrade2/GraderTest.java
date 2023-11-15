@@ -1,14 +1,14 @@
 package com.github.dscpsyl.jgrade2;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.BeforeEach;
+import static org.junit.jupiter.api.Assertions.*;
 
 import com.github.dscpsyl.jgrade2.gradedtest.GradedTestResult;
-
-import org.junit.jupiter.api.BeforeEach;
+import com.github.dscpsyl.jgrade2.gradedtest.GradedTestListenerTest.BasicGradedTests;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
 
 public class GraderTest {
 
@@ -70,7 +70,6 @@ public class GraderTest {
         unit.stopTimer();
 
         assertTrue(unit.hasExecutionTime());
-        // FIXME - Not sure how deterministic, but hopefully ok? Using big delta
         assertEquals((double) 400, (double) unit.getExecutionTime(), 10.0);
     }
 
@@ -97,5 +96,24 @@ public class GraderTest {
             unit.stopTimer();
         });
     }
+
+    @Test
+    public void setGraderStrategySuccessful() {
+        GraderStrategy s = new DeductiveGraderStrategy(0, null);
+        assertAll(() -> {
+            unit.setGraderStrategy(s);
+        });
+    }
+
+    @Test
+    public void testsCanRun(){
+        unit.runJUnitGradedTests(BasicGradedTests.class);
+        assertTrue(unit.hasGradedTestResults());
+        assertEquals(2, unit.getGradedTestResults().size());
+
+    }
+
+
+    
 
 }

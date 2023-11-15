@@ -163,7 +163,10 @@
                 <version>${jacoco-coverage.version}</version>
                 <configuration>
                     <excludes>
-                        <exclude></exclude>
+                        <!-- Hard to test for specific failures due to inability to create a TestIdentifier manually-->
+                        <exclude>/com/github/dscpsyl/jgrade2/gradedtest/GradedTestListener.class</exclude>
+                        <!-- Nothing to do-->
+                        <exclude>/com/github/dscpsyl/jgrade2/../*DefaultGraderStrategy.*</exclude>
                     </excludes>
                 </configuration>
                 <executions>
