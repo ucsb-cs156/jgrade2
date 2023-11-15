@@ -142,8 +142,7 @@
                             <appendAssemblyId>false</appendAssemblyId>
                             <archive>
                                 <manifest>
-                                    <!--!Change after all src files have been updated-->
-                                    <mainClass>com.github.dscpsyl.jgrade.JGrade</mainClass>
+                                    <mainClass>com.github.dscpsyl.jgrade.JGrade2</mainClass>
                                 </manifest>
                             </archive>
                         </configuration>
