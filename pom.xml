@@ -81,7 +81,6 @@
             <artifactId>junit</artifactId>
             <version>4.13.1</version>
         </dependency>
-
         <dependency>
             <groupId>org.json</groupId>
             <artifactId>org.json</artifactId>
@@ -99,7 +98,6 @@
             <type>pom</type>
             </dependency>
     </dependencies>
-
 
     <build>
         <finalName>${project.finalName}</finalName>
@@ -121,8 +119,6 @@
                     <additionalOptions>-html5</additionalOptions>
                 </configuration>
             </plugin>
-
-            <!--! FIXME - Get rid of warnings... -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
@@ -139,7 +135,6 @@
                             <descriptorRefs>
                                 <descriptorRef>jar-with-dependencies</descriptorRef>
                             </descriptorRefs>
-                            <appendAssemblyId>false</appendAssemblyId>
                             <archive>
                                 <manifest>
                                     <mainClass>com.github.dscpsyl.jgrade.JGrade2</mainClass>
@@ -159,7 +154,7 @@
                     <failsOnError>true</failsOnError>
                 </configuration>
             </plugin>
-
         </plugins>
     </build>
+    
 </project>
