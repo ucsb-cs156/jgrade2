@@ -4,10 +4,7 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - dev
       - master
-  pull_request:
-    types: [opened]
 
 jobs:
   publish-javadoc:
