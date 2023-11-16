@@ -22,7 +22,7 @@
   <p align="center">
     An annotation library used to help autograde student assignments in Java for Gradescope.
     <br />
-    <!--! <a href="https://github.com/dscpsyl/jgrade2"><strong>Explore the docs »</strong></a> -->
+    <a href="https://github.com/dscpsyl/jgrade2/javadoc"><strong>Explore the docs »</strong></a>
     <br />
     <br />
     <a href="https://github.com/dscpsyl/jgrade2/issues">Report Bug</a>
