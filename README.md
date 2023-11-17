@@ -59,10 +59,10 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-This is an update to the origional jGrade, now supporting Java17 and jUnit5. This provides four 
+This is an update to the original jGrade, now supporting Java17 and [JUnit5](https://junit.org/junit5/). This provides four 
 annotations: `@Grade` (+ `@before` and `@after`) and `@GradedTest`, each meant to help autograde 
 student assignments in Java for the Gradescope autograder. When correctly setup, instructors can 
-simply use jUnit5 to write tests for assignemnts. This library will automatically capture results, 
+simply use JUnit5 to write tests for assignemnts. This library will automatically capture results, 
 and output the correct json format for Gradescope to read.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -74,7 +74,7 @@ and output the correct json format for Gradescope to read.
 
 ### Prerequisites
 
-jGrade2 requires Java 17 and jUnit5. It is recommended to use Maven to manage dependencies. Additional 
+jGrade2 requires Java 17 and JUnit5. It is recommended to use Maven to manage dependencies. Additional 
 dependencies are listed in the `pom.xml` file. For the user's convenience, a `jar` file is provided
 containing all the dependencies.
 
