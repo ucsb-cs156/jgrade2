@@ -6,7 +6,10 @@ It compiles all files in to a created `classes/` directory (not tracked). The `l
 
 The source has 2 main packages, `staff` and `student`. The staff package contains the unit tests, a solution (to debug with) and the code to do the grading.
 
-To build the autograder, run either `$ sh make_autograder.sh` or `$ make autograder` which will place it in the `zips/` folder.
+To build the autograder:
+1. Run `./mvnw clean package` to build the autograder jar
+2. Copy the jGrade2 jar to the `lib/` folder
+3. Run either `$ sh make_autograder.sh` or `$ make autograder` which will place it in the `zips/` folder.
 
 While debugging, a makefile is provided for compiling and running. `make output` will start fresh and run the autograder, pretty-printing the output to the console.
 
