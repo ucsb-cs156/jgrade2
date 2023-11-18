@@ -48,6 +48,13 @@
       </ul>
     </li>
     <li><a href="#usage">Usage</a></li>
+    <ul>
+      <li><a href="#test-writting">Test Writting</a></li>
+      <li><a href="#gradescope-setup">Gradescope Setup</a></li>
+      <ul>
+        <li><a href="#to-build-the-autograder">To build the Autograder</a></li>
+      </ul>
+    </ul>
     <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#acknowledgments">Acknowledgments</a></li>
@@ -95,7 +102,47 @@ There are two ways to install jGrade2.
 <!--! USAGE EXAMPLES -->
 ## Usage
 
-Usage is nearly identical to the origional jGrade. *More information will be added soon...*
+Usage is nearly identical to the origional jGrade. See below for more information. 
+
+### Test Writting
+
+*More information will be added soon...*
+
+### Gradescope Setup
+
+There is a full example in `examples/gradescope` that works on gradescope, and models much of the setup from the original [java example](https://github.com/gradescope/autograder_samples/tree/master/java) Gradescope links to.
+
+It compiles all files in to a created `classes/` directory (not tracked). All the scripts will be looking for your classes in this directory. 
+
+The `lib/` folder contains all jars and library files needed to run your test - for this example just the jGrade2 jar file (optionally a checkstyle jar for the checkstyle grading method). The `res/` directory is for resources (like the checkstyle configuration file). 
+
+`src/` is the main source code of both your grading code and your tests, structured like any basic java program.
+
+ `test_submissions/` are submissions to test with on Gradescope. These are precompiled for you to test with the grader that is included in the example.
+
+ The source has 2 main packages, `staff` and `student`. The staff package contains the unit tests, a solution (to debug with) and the code to do the grading. The student package contains studnet skeleton code for studnets to fill in.
+
+ While debugging, a makefile is provided for compiling and running. `make output` will start fresh and run the autograder, pretty-printing the output to the console.
+
+ - `setup.sh`: Installs correct JDK
+ - `run_autograder`: Main script for the autograder. Copies in submission, compiles, and runs.
+ - `compile.sh`: Compiles all of the source into a classes directory
+ - `run.sh`: Runs JGrade, passing in the `GradeHello` file, writing output
+   - If run with `--local` then prints output to console, else to the results/results.json file.
+
+ #### To build the Autograder:
+ Either:
+
+ 1. Run `./mvnw clean package` to build the jGrade2 jar
+ 2. Copy the jGrade2 jar to the `lib/` folder
+ 3. Run either `./make_autograder.sh` or `make autograder` which will place it in the `zips/` folder.
+ 4. Upload the autograder to Gradescope.
+
+ Or:
+
+ 1. Run `./make_autograder_full.sh` which will complete the steps above for you, assuming the gradescope files are still in the `examples` directory. This will put the final zip in the base directory instead of the `zips/` folder. If you want to include checkstyle in the grading, please manually add the checkstyle jar to the `lib/` folder before running this script.
+
+
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
