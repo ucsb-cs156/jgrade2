@@ -27,7 +27,7 @@ public class GradeHello {
         grader.runJUnitGradedTests(HelloTest.class);
     }
 
-    @Grade
+    // @Grade
     public void runCheckstyle(Grader grader) {
         // FIXME - Better than knowing running from the classes directory...
         CheckstyleGrader checker = new CheckstyleGrader(10.0, 1.0,
