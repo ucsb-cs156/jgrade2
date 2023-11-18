@@ -134,10 +134,11 @@
                             <goal>single</goal>
                         </goals>
                         <configuration>
-                            <finalName>${project.finalName}</finalName>
+                            <finalName>${project.finalName}-all</finalName>
                             <descriptorRefs>
                                 <descriptorRef>jar-with-dependencies</descriptorRef>
                             </descriptorRefs>
+                            <appendAssemblyId>false</appendAssemblyId>
                             <archive>
                                 <manifest>
                                     <mainClass>com.github.dscpsyl.jgrade2.JGrade2</mainClass>
