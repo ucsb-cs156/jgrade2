@@ -1,30 +1,27 @@
 package staff.hello;
 
-import com.github.tkutcher.jgrade.gradedtest.GradedTest;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.Timeout;
+import com.github.dscpsyl.jgrade2.gradedtest.GradedTest;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.unit.jupiter.api.Timeout;
+
 import student.hello.Greeting;
 
 import static org.junit.Assert.assertEquals;
 
+// I like to add this no matter what so if the submission loops,
+// Gradescope doesn't get stuck for more than 10 seconds.
+@Timeout(10)
 public class HelloTest {
 
     // I use this so I can run locally and verify output
     static final boolean DEBUG = false;
 
-    // I like to add this no matter what so if the submission loops,
-    // Gradescope doesn't get stuck.
-    @Rule
-    public Timeout globalTimeout = Timeout.seconds(10);
-
-
     private static final String GREETING = "Hello";
     private Greeting unit;
 
     // Makes it so can verify tests work for instructor solution.
-    @Before
+    @BeforeEach
     public void initUnit() {
         this.unit = DEBUG ? new Hello(GREETING) : new student.hello.Hello(GREETING);
     }
