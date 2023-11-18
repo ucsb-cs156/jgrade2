@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
 
 echo "Building Autograder..."
+echo "--------------------------------------------------"
 
-zip -r hello_autograder.zip lib/ res/ src/ compile.sh run.sh setup.sh run_autograder
-mv hello_autograder.zip zips/
+zip -r autograder.zip lib/ res/ src/ compile.sh run.sh setup.sh run_autograder
+mv autograder.zip zips/
 
-echo "---"
 echo "DONE. Locate it in the zips directory."
+echo "--------------------------------------------------"
