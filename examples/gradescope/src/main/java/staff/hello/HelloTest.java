@@ -3,7 +3,7 @@ package staff.hello;
 import com.github.dscpsyl.jgrade2.gradedtest.GradedTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.unit.jupiter.api.Timeout;
+import org.junit.jupiter.api.Timeout;
 
 import student.hello.Greeting;
 
