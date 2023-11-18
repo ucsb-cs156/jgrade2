@@ -49,3 +49,6 @@ out/
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+
+# Example targets
+examples/gradescope/zips/hello_autograder2.zip
