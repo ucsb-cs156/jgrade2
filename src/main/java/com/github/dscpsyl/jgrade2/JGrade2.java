@@ -180,7 +180,7 @@ public final class JGrade2 {
      * @param className The name of the class to grade.
      * @return The class to grade.
      */
-    private static Class<?> getClassToGrade(String className) throws IOException {
+    private static Class<?> getClassToGrade(String className) {
         try {
             return ReflectGrade.load(className);
         } catch (MalformedURLException | ClassNotFoundException e) {
@@ -235,7 +235,7 @@ public final class JGrade2 {
      * @param args Command line arguments.
      * @throws IOException If there is an IO error.
      */
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         CommandLine line = null;
         try {
             line = readCommandLine(args);

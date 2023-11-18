@@ -2,7 +2,6 @@ package com.github.dscpsyl.jgrade2;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
-import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -28,7 +27,8 @@ final class ReflectGrade {
     private ReflectGrade() { }
 
     /**
-     * Load a class from the current directory.
+     * Load a class from the current directory. The loader is not closed as the resource is
+     * still necessary for the rest of jGrade2 to uitilize.
      * <p>
      * Method is borrowed from <a href="https://github.com/phf/jb">https://github.com/phf/jb</a>.
      *
@@ -36,15 +36,12 @@ final class ReflectGrade {
      * @return The class object.
      * @throws ClassNotFoundException If the class cannot be found.
      * @throws MalformedURLException If the URL is malformed.
-     * @throws IOException If there is an IO error.
+     *
      */
-    static Class<?> load(String className) throws ClassNotFoundException, MalformedURLException, IOException {
+    static Class<?> load(String className) throws ClassNotFoundException, MalformedURLException {
         URL url = FileSystems.getDefault().getPath("").toUri().toURL();
-        try (URLClassLoader loader = new URLClassLoader(new URL[]{url})) {
-            return loader.loadClass(className);
-        } catch (IOException e) {
-            throw e;
-        }
+        URLClassLoader loader = new URLClassLoader(new URL[]{url});
+        return loader.loadClass(className);
     }
 
     /**
