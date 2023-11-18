@@ -1,8 +1,8 @@
-import com.github.tkutcher.jgrade.gradedtest.GradedTest;
+import com.github.dscpsyl.jgrade2.gradedtest.GradedTest;
 import org.junit.Test;
 
-import static com.github.tkutcher.jgrade.gradedtest.GradedTestResult.HIDDEN;
-import static com.github.tkutcher.jgrade.gradedtest.GradedTestResult.VISIBLE;
+import static com.github.dscpsyl.jgrade2.gradedtest.GradedTestResult.HIDDEN;
+import static com.github.dscpsyl.jgrade2.gradedtest.GradedTestResult.VISIBLE;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
