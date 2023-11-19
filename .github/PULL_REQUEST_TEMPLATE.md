@@ -32,6 +32,7 @@ Some possible points could be:
 - [ ] Package version in `pom.xml` match that in `jGrade2.java`
 - [ ] Java version match in `pom.xml`, `.github/workflows/Javadoc-deploy.yml` and `res/.java-version`
 - [ ] `CHANGELOG.md` is up to date
+- [ ] git `HEAD` is labeled with a version tag
 
 ## Linked Issues
 <!--Issues related to the PR-->
