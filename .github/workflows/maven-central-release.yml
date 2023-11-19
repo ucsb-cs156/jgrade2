@@ -1,7 +1,6 @@
 name: "Release to Maven Central"
 
 on:
-  workflow_dispatch: #! DEBUG TESTING
   push:
     tags:
       - v*
