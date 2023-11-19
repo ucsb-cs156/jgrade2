@@ -79,8 +79,8 @@
 
         <!-- Maven Central release options-->
         <jreleaser.version>1.9.0</jreleaser.version>
-        <jreleaser.closeRepository>false</jreleaser.closeRepository> <!--!CHANGE AFTER FIRST PUBLISH-->
-        <jreleaser.releaseRepository>false</jreleaser.releaseRepository> <!--!CHANGE AFTER FIRST PUBLISH-->
+        <jreleaser.closeRepository>true</jreleaser.closeRepository>
+        <jreleaser.releaseRepository>true</jreleaser.releaseRepository>
         <target.deploy.folder>local::file:./target/staging-deploy</target.deploy.folder>
     </properties>
 
