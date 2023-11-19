@@ -31,6 +31,7 @@ Some possible points could be:
 - [ ] Checkstyle (`mvn test checkstyle:checkstyle`) 0 errors
 - [ ] Package version in `pom.xml` match that in `jGrade2.java`
 - [ ] Java version match in `pom.xml`, `.github/workflows/Javadoc-deploy.yml` and `res/.java-version`
+- [ ] `CHANGELOG.md` is up to date
 
 ## Linked Issues
 <!--Issues related to the PR-->

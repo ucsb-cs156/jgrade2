@@ -11,16 +11,29 @@
 
 _These new formats are from >2.0.0 (alpha-1)_
 
+
+### v2.0.0
+
+#### Added
+
+- Install via Maven Central
+
 ### v2.0.0-a2
 
 #### Added
 
 - Maven Wrapper is now being used to build the project
+- Detailed `README.md` with instructions on how to use the project
+
 
 #### Changed
 
 - Project moved to new repository [jgrade2](https://github.com/dscpsyl/jgrade2) from [jgrade](https://github.com/tkutcher/jgrade).
 - Dependencies updated to reflect new project.
+
+#### Fixed
+
+- Project now us upgraded to follow jUnit5 API protocols.
 
 ### 2.0.0 (alpha-1)
 
