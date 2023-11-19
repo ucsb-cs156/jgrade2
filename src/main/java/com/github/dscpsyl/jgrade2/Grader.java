@@ -22,11 +22,7 @@ import java.util.List;
  * {@link GradedTestResult}s, a total score, a total max score, any output
  * relevant to the entire submission, and a timer feature for timing execution
  * time. Is Observable to {@link OutputFormatter}s.
- *
- * <p>
- *     Has undocumented accessors for score, max score, execution time,
- *     graded test results, and output.
- * </p>
+ * @see OutputFormatter
  */
 public class Grader {
     private static final int NOT_SET = -1;
