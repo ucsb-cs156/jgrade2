@@ -265,6 +265,12 @@ The `lib/` folder contains all jars and library files needed to run your test - 
 
 Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
 
+The repository is structured like so:
+- `main & master` The main branches for publishing to maven central. These should be kept clean and only update with releases. It is also protected and can only be added to via a pull request.
+- `dev` The development branch. This is where all development should be done and contains pe-releases. It is protected and can only be added to via a pull request.
+
+Other branches are for personal developnment and should only be pulled to the `dev` branch. Once a release is determined, then a pull request can be made to `main` or `master`.
+
 If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
 Don't forget to give the project a star! Thanks again!
 
