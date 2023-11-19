@@ -21,7 +21,7 @@ jobs:
           distribution: temurin
           java-version-file: ./res/.java-version
       - name: Create Release files
-        runs: ./mvnw clean package -Pgh_release
+        run: ./mvnw clean package -Pgh_release
       - name: Upload to Release
         uses: svenstaro/upload-release-action@v2
         with:
