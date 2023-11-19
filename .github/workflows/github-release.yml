@@ -1,6 +1,7 @@
 name: "Compile and Create new release on Github"
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - master
