@@ -7,7 +7,6 @@ import org.junit.platform.engine.support.descriptor.MethodSource;
 import org.junit.platform.launcher.TestExecutionListener;
 import org.junit.platform.launcher.TestIdentifier;
 import org.junit.platform.launcher.TestPlan;
-import org.junit.runner.notification.RunListener;
 
 import org.junit.platform.commons.PreconditionViolationException;
 
