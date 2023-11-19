@@ -80,7 +80,6 @@ and output the correct json format for Gradescope to read.
 
 
 
-<!--! GETTING STARTED -->
 ## Getting Started
 
 ### Prerequisites
@@ -97,7 +96,15 @@ There are two ways to install jGrade2.
    either `jar` files or build the source code from scratch. If building from source, this project uses
    maven wrapper to build. Simply run `./mvnw clean package` to build the project. Two jar files will be
    created, both reflected on the [releases](https://github.com/dscpsyl/jgrade2/releases) page.
-2. Add as a dependency directly from Maven Central. *This is not yet supported, but will be in the future...*
+2. Add as a dependency directly from Maven Central.
+
+```xml
+<dependency>
+  <groupId>io.github.dscpsyl</groupId>
+  <artifactId>jgrade2</artifactId>
+  <version>${jGrade2.version}</version>
+</dependency>
+```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
