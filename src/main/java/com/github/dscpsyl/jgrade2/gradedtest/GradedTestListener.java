@@ -20,7 +20,7 @@ import java.util.Optional;
 
 
 /**
- * A class that extends a JUnit {@link RunListener} to check for unit test
+ * A class that extends a JUnit {@link TestExecutionListener} to check for unit test
  * methods annotated with the {@link GradedTest} annotation. It builds up a
  * list of {@link GradedTestResult}s, one for each method with the annotation.
  * Captures anything printed to standard out during the test run and adds it
@@ -219,12 +219,12 @@ public class GradedTestListener implements TestExecutionListener {
      * been {@linkplain #executionSkipped skipped}.
      *
      * <p>
-     * This method will be called for a container {@code TestIdentifier}
+     * This method will be called for a container {@link TestIdentifier}
      * <em>before</em> {@linkplain #executionStarted starting} or
      * {@linkplain #executionSkipped skipping} any of its children.
      *
      * <p>
-     * For backwards compatability, this function sets the {@code testOutput} for
+     * For backwards compatability, this function sets the {@link testOutput} for
      * the class.
      *
      *
