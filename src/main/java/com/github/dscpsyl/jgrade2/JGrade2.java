@@ -12,7 +12,6 @@ import com.github.dscpsyl.jgrade2.gradescope.GradescopeJsonFormatter;
 
 import java.io.FileNotFoundException;
 import java.io.PrintStream;
-import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.MalformedURLException;
@@ -233,7 +232,6 @@ public final class JGrade2 {
     /**
      * Main entry point. See usage or run with <code>--help</code>
      * @param args Command line arguments.
-     * @throws IOException If there is an IO error.
      */
     public static void main(String[] args) {
         CommandLine line = null;
