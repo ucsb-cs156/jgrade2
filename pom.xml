@@ -33,7 +33,7 @@
         </developer>
     </developers>
 
-    <groupId>edu.ucsb.cs156</groupId>
+    <groupId>io.github.dscpsyl</groupId>
     <artifactId>jgrade2</artifactId>
     <packaging>jar</packaging>
     <version>2.0.0-a2</version> <!-- NOTE - If major/minor version changes, update project.finalName in properties -->
@@ -401,15 +401,6 @@
                     </plugin>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-compiler-plugin</artifactId>
-                        <version>${maven-compiler-plugin.version}</version>
-                        <configuration>
-                            <source>${java.target.version}</source>
-                            <target>${java.target.version}</target>
-                        </configuration>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-javadoc-plugin</artifactId>
                         <version>${maven-javadoc-plugin.version}</version>
                         <configuration>
@@ -462,6 +453,56 @@
                                 </maven>
                             </deploy>
                             </jreleaser>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>gh_release</id>
+            <properties>
+                <maven.test.skip>true</maven.test.skip>
+                <checker.fail.on.error>true</checker.fail.on.error>
+                <gh.release.dir>target/gh_release</gh.release.dir>
+                <outputDirectory>${gh.release.dir}</outputDirectory>
+            </properties>
+            <build>
+                <defaultGoal>package</defaultGoal>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-assembly-plugin</artifactId>
+                        <version>${maven-assembly-plugin.version}</version>
+                        <executions>
+                            <execution>
+                                <id>create-my-bundle</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>single</goal>
+                                </goals>
+                                <configuration>
+                                    <finalName>${project.finalName}-all</finalName>
+                                    <descriptorRefs>
+                                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                                    </descriptorRefs>
+                                    <appendAssemblyId>false</appendAssemblyId>
+                                    <outputDirectory>${gh.release.dir}</outputDirectory>
+                                    <workDirectory>${gh.release.dir}</workDirectory>
+                                    <archive>
+                                        <manifest>
+                                            <mainClass>com.github.dscpsyl.jgrade2.JGrade2</mainClass>
+                                        </manifest>
+                                    </archive>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                      <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-jar-plugin</artifactId>
+                        <version>2.3.1</version>
+                        <configuration>
+                            <outputDirectory>${gh.release.dir}</outputDirectory>
                         </configuration>
                     </plugin>
                 </plugins>
