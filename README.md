@@ -49,7 +49,11 @@
     </li>
     <li><a href="#usage">Usage</a></li>
     <ul>
-      <li><a href="#test-writting">Test Writting</a></li>
+      <li><a href="#test-writting-and-grading">Test Writting and Grading</a></li>
+      <ul>
+        <li><a href="#tests">Tests</a></li>
+        <li><a href="#grading">Grading</a></li>
+      </ul>
       <li><a href="#gradescope-setup">Gradescope Setup</a></li>
       <ul>
         <li><a href="#to-build-the-autograder">To build the Autograder</a></li>
@@ -67,7 +71,7 @@
 ## About The Project
 
 This is an update to the original jGrade, now supporting Java17 and [JUnit5](https://junit.org/junit5/). This provides four 
-annotations: `@Grade` (+ `@before` and `@after`) and `@GradedTest`, each meant to help autograde 
+annotations: `@Grade` (+ `@BeforeGrading` and `@AfterGrading`) and `@GradedTest`, each meant to help autograde 
 student assignments in Java for the Gradescope autograder. When correctly setup, instructors can 
 simply use JUnit5 to write tests for assignemnts. This library will automatically capture results, 
 and output the correct json format for Gradescope to read.
@@ -99,14 +103,116 @@ There are two ways to install jGrade2.
 
 
 
-<!--! USAGE EXAMPLES -->
 ## Usage
 
-Usage is nearly identical to the origional jGrade. See below for more information. 
+Usage is nearly identical to the origional [jGrade](https://github.com/tkutcher/jgrade). jGrade2 comes with a commandline
+to run the grader manually. This is useful for debugging and testing. After compiling, you can use
 
-### Test Writting
+```java -jar jGrade2.jar -h```
 
-*More information will be added soon...*
+for help and options of the commandline. However, a typical usage would be
+
+```java -jar jGrade2.jar -c ExampleGrading -o results.json```
+
+### Test Writting and Grading
+
+You can take a look at the gradescope example in `examples/gradescope` for a full example.
+
+#### Tests
+
+Tests are written in jUnit5. The only addition will be the `@GradedTest` annotation to each test that should be counted in the
+assignment on gradescope. 
+
+```java
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Assertions;
+import com.github.dscpsyl.jgrade2.gradedtest.GradedTest;
+
+import static com.github.dscpsyl.jgrade2.gradedtest.HIDDEN;
+import static com.github.dscpsyl.jgrade2.gradedtest.VISIBLE;
+
+public class ExampleTest {
+    @Test
+    @GradedTest(name="Example Test", points=10)
+    public void testExample() {
+        Assertions.assertTrue(true);
+    }
+
+    @Test
+    @GradedTest(name="Hidden Test", points=10, visibility=HIDDEN)
+    public void testHidden() {
+        Assertions.assertTrue(true);
+    }
+
+    @Test
+    @GradedTest(name="Visible Test", number="4", points=10, visibility=VISIBLE)
+    public void testVisible() {
+        Assertions.assertTrue(true);
+    }
+
+}
+```
+
+The `@GradedTest` annotation has the following parameters:
+- `name` - The name of the test. This will be displayed in the Gradescope interface. DEFAUT: "Unnamed test"
+- `number` - The test number in a string. This will be displayed in the Gradescope interface. DEFAULT: ""
+- `points` - The number of points this test is worth. DEFAULT: 1.0
+- `visibility` - The visibility of the test. This can be either VISIBLE or HIDDEN. DEFAULT: VISIBLE
+
+#### Grading
+
+Grading is done by a simple grading class. This class should be in the same package as the tests. Each method in the grading class
+that should be considered for grading needs to be annotated with `@Grade`. The method should take in a single parameter of type
+`Grader`. `@BeforeGrading` and `AfterGrading` can be used to run code before and after grading respectively. These methods should
+also take in a single parameter of type `Grader`. 
+
+```java
+import com.github.dscpsyl.jgrade2.Grader;
+import com.github.dscpsyl.jgrade2.GradedTestResult;
+
+import com.github.dscpsyl.jgrade2.Grade;
+import com.github.dscpsyl.jgrade2.AfterGrading;
+import com.github.dscpsyl.jgrade2.BeforeGrading;
+
+import static com.github.dscpsyl.jgrade2.gradedtest.HIDDEN;
+
+public class ExampleGrading {
+
+  /* This function will run before grading starts*/
+  @BeforeGrading
+  public void beforeGrading(Grader g) {
+    System.out.println("Starting grading");
+    grader.startTimer();
+  }
+
+  /* You can grade a full test class that is in the same package as this class */
+  @Grade
+  public void gradeTestClass(Grader g) {
+    g.runJUnitGradedTests(ExampleTest.class);
+  }
+
+  /* If you cannot use jUnit5 or java to grade, you can manually add results */
+  @Grade
+  public void gradeManually(Grader g) {
+    g.addGradedTestResult(new GradedTestResult("Manual Test", "4" , 10.0, HIDDEN));
+  }
+
+  /* Grader.startTimer() and Grader.stopTimer() can be used to time the grader */
+  @Grade
+  public void loopForTime(Grader grader) {
+    long startTime = System.currentTimeMillis();
+    while (System.currentTimeMillis() - startTime < 1000);
+  }
+
+  /* @AfterGrading methods are run after all other methods. */
+  @AfterGrading
+  public void endGrader(Grader grader) {
+    grader.stopTimer();
+    System.out.println("Grading finished");
+  }
+
+}
+```
 
 ### Gradescope Setup
 
@@ -116,7 +222,7 @@ It compiles all files in to a created `classes/` directory (not tracked). All th
 
 The `lib/` folder contains all jars and library files needed to run your test - for this example just the jGrade2 jar file (optionally a checkstyle jar for the checkstyle grading method). The `res/` directory is for resources (like the checkstyle configuration file). 
 
-`src/` is the main source code of both your grading code and your tests, structured like any basic java program.
+`src/` is the main source code of both your grading code and your tests.
 
  `test_submissions/` are submissions to test with on Gradescope. These are precompiled for you to test with the grader that is included in the example.
 
@@ -177,8 +283,9 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 <!-- ACKNOWLEDGMENTS -->
 ## Acknowledgments
 
-* This is an update fork of the original [jGrade](https://github.com/tkutcher/jgrade).
-* The checkstyle grader uses `maven-checkstyle-plugin`.
+* This is an update of the original [jGrade](https://github.com/tkutcher/jgrade).
+* Originally developed by [dscpsyl](https://github.com/dscpsyl) and directed by [pconrad](https://github.com/pconrad)
+* Maintained by the CMPSC 192 course staff and students at University of California, Santa Barbara
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
