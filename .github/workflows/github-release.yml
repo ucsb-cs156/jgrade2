@@ -1,0 +1,33 @@
+name: "Compile and Create new release on Github"
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+      - main
+    tags:
+      - v*
+
+jobs:
+  upload-release:
+    name: Build and Upload Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3.5.2
+      - name: Setup Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: temurin
+          java-version-file: ./res/.java-version
+      - name: Create Release files
+        run: ./mvnw clean package -Pgh_release
+      - name: Upload to Release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: target/gh_release/*
+          tag: ${{ github.ref }}
+          overwrite: true
+          file_glob: true

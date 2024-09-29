@@ -1,0 +1,4 @@
+# Config file for @restyled-iorestyled-io bot on GitHub
+enabled: true
+exclude:
+  - "mvnw"

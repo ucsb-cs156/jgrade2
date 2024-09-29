@@ -1,0 +1,71 @@
+name: "Tests and Style Checks"
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - dev
+  pull_request:
+    types: [opened]
+
+jobs:
+  unit-tests:
+    name: Unit Tests
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v3.5.2
+    - name: Setup Java
+      uses: actions/setup-java@v3
+      with:
+        distribution: temurin
+        java-version-file: ./res/.java-version
+    - name: Run unit tests
+      run: ./mvnw -B clean test
+
+  jacoco-coverage:
+    name: Jacoco Coverage Requirement
+    needs: unit-tests
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v3.5.2
+    - name: Setup Java
+      uses: actions/setup-java@v3
+      with:
+        distribution: temurin
+        java-version-file: ./res/.java-version
+    - name: Run jacoco 
+      run: ./mvnw -B test jacoco:report
+
+  pitest-mutation:
+    name: Pitest Mutation Requirement
+    needs: unit-tests
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v3.5.2
+    - name: Setup Java
+      uses: actions/setup-java@v3
+      with:
+        distribution: temurin
+        java-version-file: ./res/.java-version
+    - name: Run pitest
+      run: ./mvnw -B test org.pitest:pitest-maven:mutationCoverage
+
+  checkstyle-check:
+    name: Java Checkstyle
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v3.5.2
+    - name: Setup Java
+      uses: actions/setup-java@v3
+      with:
+        distribution: temurin
+        java-version-file: ./res/.java-version
+    - name: Check code styles
+      run: ./mvnw checkstyle:check
+
+      
+
